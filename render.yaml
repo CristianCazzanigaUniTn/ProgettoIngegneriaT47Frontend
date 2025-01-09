@@ -1,8 +1,0 @@
-version: 1
-services:
-  - type: web
-    name: vue-app
-    env: static
-    static:
-      publicDir: dist
-      cleanUrls: true
