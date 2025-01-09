@@ -38,12 +38,14 @@
         </div>
 
         <div class="faq-input-container" v-if="!isParty && loggedUser.token !== undefined">
+            <div v-if="loggedUser.ruolo !== 'organizzatore'">
             <textarea 
                 id="faqInput" 
                 class="faq-input" 
                 :placeholder="organizzaEP ? 'Rispondi ad una domanda...' : 'Scrivi una domanda...'" 
                 v-model="newFaqText">
             </textarea>
+            </div>
             <button 
                 id="faqSubmit" 
                 class="faq-submit" 

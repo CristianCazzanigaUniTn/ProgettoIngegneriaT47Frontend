@@ -17,9 +17,9 @@
 .popup-container {
     background-color: white;
     position: fixed;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 15px;
     padding: 20px;
     height: auto;
@@ -29,21 +29,23 @@ transform: translate(-50%, -50%);
     overflow-x: hidden;
     display: flex;
     z-index: 1000;
-overflow: auto;
-flex-direction: column;
+    overflow: auto;
+    flex-direction: column;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
 }
 
 
 .popup-container::-webkit-scrollbar {
-    width: 10px; 
+    width: 10px;
 }
+
 .popup-container::-webkit-scrollbar-thumb {
     background-color: #161d1a67;
     border-radius: 10px;
-    border: 2px solid #ffffff; 
+    border: 2px solid #ffffff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 .popup-container::-webkit-scrollbar-track {
     background: #00000017;
     border-radius: 10px;
@@ -190,18 +192,34 @@ textarea:focus {
     .form-group {
         flex-direction: column;
     }
-    .image-upload 
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        color: black;
+        margin-bottom: 10px;
+    }
+
+    .description-container {
+        margin-left: 0px;
+    }
+
+    #desc
     {
+        gap: 10px;
+    }
+    .image-upload {
         width: 300px;
         height: 300px;
     }
-    .image-preview
-    {
+
+    .image-preview {
         width: 300px;
         height: 300px;
     }
-    .image-preview img
-    {
+
+    .image-preview img {
         width: 300px;
         height: 300px;
     }

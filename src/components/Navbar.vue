@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router'; // Importa useRoute
 import { loggedUser, clearLoggedUser } from '@/states/loggedUser.ts';
 import router from '../router';
@@ -15,6 +15,11 @@ const searchQuery = ref('');
 const suggestions = ref([]);
 const result = ref('');
 const route = useRoute(); // Usa la route per verificare la rotta corrente
+const isMobile = ref(false);
+
+onMounted(() => {
+  isMobile.value = window.innerWidth <= 768; 
+});
 
 async function fetchSuggestions(query) {
   const url = `https://autocomplete.search.hereapi.com/v1/autocomplete?q=${encodeURIComponent(query)}&apiKey=${API_KEY}&limit=4&types=city`;
@@ -86,7 +91,7 @@ function showAlert() {
       <router-link v-if="isAuthenticated" :to="`/profilo/${userId}`" id="profilo">
         <span class="username">
           <img v-if="userProfilePicture" :src="userProfilePicture" alt="Foto Profilo" class="profile-picture" />
-          {{ username }}
+          <span class="nomeProfilo">{{ username }}</span>
         </span>
       </router-link>
       <router-link v-if="!isAuthenticated" to="/login" id="home">ACCEDI</router-link>
@@ -107,29 +112,30 @@ function showAlert() {
           </div>
         </div>
       </div>
-      <div class="settings-container" @mouseenter="isSettingsMenuVisible = true"
-        @mouseleave="isSettingsMenuVisible = false">
-        <img src="@/assets/imp.png" alt="Impostazioni" class="settings-icon" />
-
-        <div class="settings-menu" v-if="isSettingsMenuVisible">
-          <ul>
-            <li @click="showAlert">Gestione eventi <span>></span></li>
-            <li @click="showAlert">Lingua <span>></span></li>
-            <li @click="showAlert">Centro sulla privacy <span>></span></li>
-            <li @click="showAlert">Archivio Post <span>></span></li>
-            <li @click="showAlert">Autorizzazioni del sito web <span>></span></li>
-            <li @click="showAlert">Utenti bloccati <span>></span></li>
-            <li @click="showAlert">Elimina account <span>></span></li>
-            <li v-if="isAuthenticated"  @click="isAuthenticated ? handleLogout() : null" >Log-out <span>></span></li>
-            <div v-if="!isAuthenticated">
-              <router-link to="/login">
-                <li>Log in <span>></span></li>
-              </router-link>
-            </div>
-           
-          </ul>
-        </div>
+      <div class="settings-container" 
+      @mouseenter="!isMobile && (isSettingsMenuVisible = true)"
+      @mouseleave="!isMobile && (isSettingsMenuVisible = false)"
+      @click="isMobile && (isSettingsMenuVisible = !isSettingsMenuVisible)">
+      <img src="@/assets/imp.png" alt="Impostazioni" class="settings-icon" />
+    
+      <div class="settings-menu" v-if="isSettingsMenuVisible">
+        <ul>
+          <li @click="showAlert">Gestione eventi <span>></span></li>
+          <li @click="showAlert">Lingua <span>></span></li>
+          <li @click="showAlert">Centro sulla privacy <span>></span></li>
+          <li @click="showAlert">Archivio Post <span>></span></li>
+          <li @click="showAlert">Autorizzazioni del sito web <span>></span></li>
+          <li @click="showAlert">Utenti bloccati <span>></span></li>
+          <li @click="showAlert">Elimina account <span>></span></li>
+          <li v-if="isAuthenticated" @click="handleLogout">Log-out <span>></span></li>
+          <div v-if="!isAuthenticated">
+            <router-link to="/login">
+              <li>Log in <span>></span></li>
+            </router-link>
+          </div>
+        </ul>
       </div>
+    </div>
     </div>
   </nav>
 </template>

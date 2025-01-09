@@ -248,12 +248,56 @@
 @media (max-width: 768px) {
     .container-box {
         padding: 15px;
+        width: 100vw;
+        background-color: rgba(0, 255, 255, 0.081);
+        border-radius: 0px;
     }
+
+    .sright {
+        background-color: rgba(15, 31, 58, 0.713);
+        padding: 40px 30px;
+        border-radius: 55px;
+        width: 70%;
+        border: 0px solid rgba(97, 109, 185, 0);
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.3);
+        height: 80%;
+        margin-left: 5%;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+        min-height: 500px;
+        padding-top: 20px;
+    }
+
+    .sezione-contenuti
+{
+    position: relative;
+    padding: 20px 20px;
+    margin-bottom: 20px; 
+    width: 100%;
+    margin-left: 0%;
+    padding-top: 20px;
+}
+
 
     .left, .right {
         width: 100%;
         height: auto;
     }
+    
+    .right
+    {
+        border: 0px;
+        width: 100%;
+        padding: 0px;
+        border-radius: 0px;
+        margin: 0px;
+        
+    }
+   
 
     .nomeUtente {
         font-size: 28px;
@@ -297,3 +341,5 @@
         font-size: 24px;
     }
 }
+
+

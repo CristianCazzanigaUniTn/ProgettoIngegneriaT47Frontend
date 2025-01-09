@@ -190,7 +190,7 @@
   font-family: sans-serif;
   height: 430px;
   width: 400px;
-  min-width: 400px; /* Increased width of the menu */
+  max-width: 400px; /* Increased width of the menu */
 }
 
 .settings-menu ul {
@@ -231,18 +231,41 @@
       flex-wrap: wrap;
       justify-content: center;
       padding: 10px 20px;
+      height: 100px;
+      
+  }
+
+
+  
+.settings-menu {
+
+  position: fixed;
+  top: 70px; 
+  right: 30px; 
+  height: 430px;
+  width: 300px;
+}
+
+  .navbar-left
+  {
+    display: none;
   }
 
   .navbar-center {
-      position: static;
-      transform: none;
-      gap: 20px;
+    position: absolute;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    transform:  translate(0%);
+    gap: 12px;
   }
 
-  .navbar-left h1 {
-      display: none;
+  .navbar-center a
+  {
+    font-size: 20px;
   }
 
+ 
   .search-bar {
       display: none;
   }
@@ -263,6 +286,13 @@
 
 
 @media (max-width: 500px) {
+  .nomeProfilo
+  {
+    display: none;
+  }
+  .navbar-center {
+    gap: 30px;
+  }
   .logo
   {
     display: none;

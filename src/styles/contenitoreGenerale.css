@@ -9,3 +9,9 @@
     bottom: 0;
     overflow: hidden;
 }
+
+@media (max-width: 768px) {
+    .contenitoreGenerale {
+        height: calc(100% - 100px); /* Altezza responsiva con spazio per la navbar */
+    }
+}
