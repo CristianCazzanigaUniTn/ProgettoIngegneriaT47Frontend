@@ -1,9 +1,8 @@
-# render.yaml
-static_site:
-  name: nome-del-tuo-progetto
-  env: production
-  buildCommand: "npm run build"  # Il comando per generare la build del progetto
-  publishDirectory: "dist"  # La directory dove Vite genera la build finale
-  routes:
-    - src: "/(.*)"
-      dest: "/index.html"
+version: 1
+services:
+  - type: web
+    name: vue-app
+    env: static
+    static:
+      publicDir: dist
+      cleanUrls: true
