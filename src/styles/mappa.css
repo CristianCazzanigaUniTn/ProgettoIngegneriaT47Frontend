@@ -444,6 +444,10 @@ h1 {
         padding: 20px;
     }
 
+    .sidebar
+    {
+        display: none;
+    }
     
     .filter-window {
         border-radius: 8px;
