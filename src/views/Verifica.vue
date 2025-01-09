@@ -18,7 +18,7 @@ async function verifica() {
     try {
         await verificaUtente(token);
         alert("Account verificato");
-        router.push('/');
+        router.push('/login');
     } catch (error) {
         console.error("Errore durante la verifica:", error);
         alert("Si è verificato un errore durante la verifica");
