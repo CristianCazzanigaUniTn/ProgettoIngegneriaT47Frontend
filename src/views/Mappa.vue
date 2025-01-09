@@ -123,7 +123,7 @@ onMounted(() => {
             </div>
 
 
-            <div class="filter-container" @mouseenter="filtroDestra = true" @mouseleave="filtroDestra = false">
+            <div class="filter-container2" @mouseenter="filtroDestra = true" @mouseleave="filtroDestra = false">
               <img src="@/assets/ordina.png" alt="Filter Icon" style="cursor:pointer;" />
               <div v-if="filtroDestra" class="filter-window">
                 <h4>Ordina</h4>

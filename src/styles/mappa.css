@@ -308,12 +308,12 @@
     max-height: 100px;
 }
 
-.filter-container {
+.filter-container, .filter-container2 {
     position: relative;
     display: inline-block;
 }
 
-.filter-container img {
+.filter-container img,  .filter-container2 img{
     width: 40px;
     height: 40px;
     cursor: pointer;
@@ -434,6 +434,17 @@ h1 {
         justify-content: center;
     }
 
+
+    .filtri {
+        width: 0px;
+        height: 0px;
+        background-color: rgba(15, 31, 58, 0);
+        border-radius: 0px;
+        box-shadow: 0px;
+        padding: 20px;
+    }
+
+    
     .filter-window {
         border-radius: 8px;
         width: 250px;
@@ -444,7 +455,10 @@ h1 {
         overflow-y: auto;
     }
     
-
+    .filter-container2
+    {
+        display: none;
+    }
     .floatingPostMobilePost {
         position: fixed;
         bottom: 90px;
