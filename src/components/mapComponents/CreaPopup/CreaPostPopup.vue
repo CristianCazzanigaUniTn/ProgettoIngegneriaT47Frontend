@@ -193,6 +193,6 @@ async function postFormHandler() {
 }
 </script>
 
-<style scoped>
-  @import "@/styles/popupCreaPost.css";
-</style>
+<style scoped src="@/styles/popupCreaPost.css"></style>
+
+
