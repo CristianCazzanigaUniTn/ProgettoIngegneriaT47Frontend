@@ -1,9 +1,9 @@
 
 import { ref } from 'vue';
-import { estraiDati, Posted } from './estraiDati.ts'
-import { AggiornaMappa, chiudiPopUpAnim, apriPopUpAnim } from './map.ts';
+import { estraiDati, Posted } from './estraiDati'
+import { AggiornaMappa, chiudiPopUpAnim, apriPopUpAnim } from './map';
 import { estraiCategorie, estraieventoid, estraipartyid } from './popup';
-import { loggedUser } from '../../states/loggedUser.ts';
+import { loggedUser } from '../../states/loggedUser';
 import { getPosition } from '../Tools/posizione';
 
 
