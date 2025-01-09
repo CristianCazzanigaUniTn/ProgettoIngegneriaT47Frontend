@@ -7,6 +7,7 @@ export default {
     sourcemap: true,   // Abilita la generazione di sourcemap per il debugging
   },
   resolve: {
+    extensions: ['.ts', '.js', '.vue'],
     alias: {
       '@': '/src',
     }
