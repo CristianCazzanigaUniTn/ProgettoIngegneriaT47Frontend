@@ -530,7 +530,7 @@ export async function rispondiFaq(id: any, risposta: string) {
 // Function to fetch all categories (as per your previous requirement)
 export async function estraiCategorie() {
     try {
-        const response = await fetch('http://localhost:3000/api/categoria');
+        const response = await fetch(`${API_BASE_URL}/api/categoria`);
         if (!response.ok) {
             throw new Error(`Errore nella richiesta: ${response.status} ${response.statusText}`);
         }
