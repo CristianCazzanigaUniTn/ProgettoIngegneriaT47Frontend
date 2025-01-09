@@ -1,0 +1,299 @@
+.container-box {
+    padding: 40px 30px;
+    border-radius: 55px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    width: 90vw;
+    position: absolute;
+    height: 100%;
+    overflow: auto;
+}
+
+
+
+.container-box::-webkit-scrollbar {
+    width: 10px; 
+}
+.container-box::-webkit-scrollbar-thumb {
+    background-color: #161d1a67;
+    border-radius: 10px;
+    border: 2px solid #ffffff; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.container-box::-webkit-scrollbar-track {
+    background: #00000017;
+    border-radius: 10px;
+}
+
+
+
+.left {
+    padding: 40px 30px;
+    width: 30%;
+    height: 60%;
+    border-radius: 55px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 5%;
+    text-align: center;
+}
+
+.user-profile {
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.nomeUtente {
+    max-width: 70%;
+    font-size: 43px;
+    margin-bottom: 20px;
+    text-shadow: 0 6px 15px rgb(0, 0, 0);
+    word-wrap: break-word;
+}
+
+.fotoProfilo {
+    width: 50%;
+    background-image: url('../image/logo.png');
+    height: 0;
+    padding-top: 50%;
+    border-radius: 50%;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.right {
+    background-color: rgba(15, 31, 58, 0.713);
+    padding: 40px 30px;
+    border-radius: 55px;
+    width: 70%;
+    border: 3px solid rgb(97, 109, 185);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.3);
+    height: 80%;
+    margin-left: 5%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    min-height: 500px;
+    padding-top: 20px;
+}
+
+
+
+.right::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.right {
+    scrollbar-width: none; /* Firefox */
+}
+
+.listacards {
+    border-radius: 55px;
+    width: 80%; /* Usa tutta la larghezza disponibile */
+    display: flex;
+    flex-wrap: wrap; /* Permette alle card di andare a capo */
+    justify-content: center; /* Centra le card */
+    gap: 20px; /* Spaziatura tra le card */
+    padding: 20px;
+    text-align: center;
+    max-height: 1000px;
+    overflow: auto;
+}
+
+.listacards::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+
+.sezione-contenuti
+{
+    position: relative;
+    padding: 40px 30px;
+    border-radius: 55px;
+    margin-bottom: 40px; /* Spaziatura tra sezioni */
+    width: 100%; /* Usa tutta la larghezza */
+    height: auto;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-left: 5%;
+    scroll-behavior: smooth;
+    padding-top: 20px;
+}
+
+
+.card {
+    width: 60%;
+    padding-top: 60%;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgb(255, 255, 255);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-content {
+    background-color: rgba(0, 0, 0, 0.5);  /* Sfondo semi-trasparente per la parte del contenuto */
+    color: white;
+    padding: 15px;
+    border-radius: 15px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card-description {
+    font-size: 14px;
+    font-weight: lighter;
+    
+}
+
+.card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Aggiungi un effetto di hover per il bordo */
+    transform: scale(1.05); /* Leggero ingrandimento al passaggio del mouse */
+    transition: all 0.3s ease; /* Aggiungi transizione fluida */
+}
+
+.titoloOggi {
+    text-shadow: 0 6px 15px rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 40px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+@media (max-width: 1824px) {
+   
+
+    .nomeUtente {
+        font-size: 35px;
+    }
+
+ 
+}
+
+
+/* Media Queries per la responsività */
+@media (max-width: 1024px) {
+    .container-box {
+        display: block;
+        padding: 20px;
+    }
+
+    .left, .right {
+        width: 100%;
+        margin-right: 0;
+        margin-left: 0;
+        height: auto;
+    }
+
+    .nomeUtente {
+        font-size: 35px;
+    }
+
+    .fotoProfilo {
+        width: 70%;
+        padding-top: 70%;
+    }
+
+    .right {
+        padding: 20px;
+        height: auto;
+    }
+
+    .card {
+        width: 80%;
+        padding-top: 60%;
+    }
+
+    .listacards {
+        width: 100%;
+        padding-top: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container-box {
+        padding: 15px;
+    }
+
+    .left, .right {
+        width: 100%;
+        height: auto;
+    }
+
+    .nomeUtente {
+        font-size: 28px;
+    }
+
+    .fotoProfilo {
+        width: 80%;
+        padding-top: 80%;
+    }
+
+    .card {
+        width: 90%;
+        padding-top: 70%;
+    }
+
+    .titoloOggi {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-box {
+        padding: 10px;
+    }
+
+    .nomeUtente {
+        font-size: 24px;
+    }
+
+    .fotoProfilo {
+        width: 90%;
+        padding-top: 90%;
+    }
+
+    .card {
+        width: 100%;
+        padding-top: 80%;
+    }
+
+    .titoloOggi {
+        font-size: 24px;
+    }
+}
