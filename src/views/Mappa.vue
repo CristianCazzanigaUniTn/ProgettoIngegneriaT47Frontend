@@ -149,12 +149,12 @@ onMounted(() => {
   </div>
 
   <!-- Popup per la visualizzazione del Post -->
-  <PostPopup v-if="true" :isVisible="true" :profileName="postUserName"
+  <PostPopup v-if="showPopupPost" :isVisible="showPopupPost" :profileName="postUserName"
     :profileImage="postProfilePicture" :postImage="postImage" :description="postDescription" :time="postTime"
     :userIdView="userIdView" :organizzaP="organizza" @close-popup="closePopup('VisualizzaPost')" />
 
   <!-- Popup per la visualizzazione del Party/Evento -->
-  <PartyEventoPopup v-if="true" :isVisible="true" :profileNameEP="profileNameep"
+  <PartyEventoPopup v-if="showPopupPartyEvento" :isVisible="showPopupPartyEvento" :profileNameEP="profileNameep"
     :profileImageEP="profileImageep" :partyImageEP="partyImageep" :descriptionEP="descriptionep" :timeEP="timeep"
     :userIdViewEP="userIdViewep" :maxParticipantsEP="maxParticipantsep"
     :categoryEP="categoryep" :organizzaEP="organizza" :idEP="idep"

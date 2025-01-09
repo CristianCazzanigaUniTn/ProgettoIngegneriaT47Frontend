@@ -95,24 +95,24 @@ export async function ordinaSidebar(tipo: string = '') {
 export function openPopup(type:any, posizione:any) {
   CloseAllPopup();
   apriPopUpAnim(posizione);
-  if (type === "CreaPost") showPopupCreaPost.value = true;
-  if (type === "CreaParty") showPopupCreaParty.value = true;
-  if (type === "CreaEvento") showPopupCreaEvento.value = true;
-  if (type === "VisualizzaPost") showPopupPost.value = true; // Apri il popup del post
-  if (type === "VisualizzaPartyEvento") showPopupPartyEvento.value = true; 
+  if (type == "CreaPost") showPopupCreaPost.value = true;
+  if (type == "CreaParty") showPopupCreaParty.value = true;
+  if (type == "CreaEvento") showPopupCreaEvento.value = true;
+  if (type == "VisualizzaPost") showPopupPost.value = true; // Apri il popup del post
+  if (type == "VisualizzaPartyEvento") showPopupPartyEvento.value = true; 
 }
 
 // Funzione per chiudere i popup
 export function closePopup(type: any) {
   chiudiPopUpAnim();
-  if (type === "CreaPost") showPopupCreaPost.value = false;
-  if (type === "CreaParty") showPopupCreaParty.value = false;
-  if (type === "CreaEvento") showPopupCreaEvento.value = false;
-  if (type === "VisualizzaPost") 
+  if (type == "CreaPost") showPopupCreaPost.value = false;
+  if (type == "CreaParty") showPopupCreaParty.value = false;
+  if (type == "CreaEvento") showPopupCreaEvento.value = false;
+  if (type == "VisualizzaPost") 
     {
         showPopupPost.value = false; 
     }
-    if (type === "VisualizzaPartyEvento") showPopupPartyEvento.value = false; 
+    if (type == "VisualizzaPartyEvento") showPopupPartyEvento.value = false; 
 }
 
 //campi post
