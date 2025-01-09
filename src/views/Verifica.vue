@@ -17,11 +17,15 @@ async function verifica() {
     
     try {
         await verificaUtente(token);
+        alert("Account verificato");
+        router.push('/');
     } catch (error) {
         console.error("Errore durante la verifica:", error);
         alert("Si è verificato un errore durante la verifica");
+        router.push('/');
     }
 
+    
     // Dopo la verifica, reindirizza l'utente
    
 }
