@@ -203,4 +203,7 @@ async function eventFormHandler() {
 }
 </script>
 
-<style scoped src="@/styles/creaEventoPopup.css"></style>
+
+<style scoped>
+  @import "@/styles/creaEventoPopup.css";
+</style>
