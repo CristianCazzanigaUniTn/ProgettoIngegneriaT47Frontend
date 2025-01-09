@@ -208,4 +208,6 @@ async function partyFormHandler() {
 }
 </script>
 
-<style scoped src="@/styles/creaPartyPopup.css"></style>
+<style scoped lang="css">
+    @import "@/styles/creaPartyPopUp.css";
+</style>
