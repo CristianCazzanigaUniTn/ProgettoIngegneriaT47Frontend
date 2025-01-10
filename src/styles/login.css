@@ -138,7 +138,7 @@ select.input-field {
   }
 
 
-@media (max-width: 768px) {
+@media (max-width: 994px) {
     .login-box {
         position: absolute;
         background-color: rgba(64, 111, 187, 0.311); 

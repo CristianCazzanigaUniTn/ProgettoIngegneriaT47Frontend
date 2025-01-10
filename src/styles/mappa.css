@@ -416,7 +416,38 @@ h1 {
   margin-top: 20px;
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 1450px) {
+
+    #map
+    {
+        width: 78%;
+    }
+    .sidebar
+    {
+        width: 100%;
+    }
+    .right {
+        width: 78%;
+        
+    }
+    .left
+    {
+        width: 22%;
+    }
+    .filtri
+    {
+        height: 60px;
+    }
+    .filtri img
+    {
+        height: 30px;
+        width: 30px;
+    }
+    
+}
+
+@media (max-width: 994px) {
     #filtroVisualizza {
         z-index: 999;
         height: 60px;

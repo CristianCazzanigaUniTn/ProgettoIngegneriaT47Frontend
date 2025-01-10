@@ -224,9 +224,42 @@
   color: #192a56; /* Dark blue color for the arrow */
 }
 
+@media (max-width: 1450px) {
+  .navbar-center {
+    
+    gap: 22px;
+  }
+
+    
+  .navbar-left h1 {
+    font-size: 30px;
+  }
+  
+  .navbar-left .logo {
+    height: 60px;
+  }
+
+  .navbar-center a {
+    font-size: 20px;
+    gap: 12px;
+  }
+  .search-bar {
+    padding: 5px 10px;
+    border: 2px solid white;
+    border-radius: 20px;
+    background-color: transparent;
+    color: white;
+    font-weight: lighter;
+    outline: none;
+    font-size: 14px;
+    height: 30px;
+    width: 170px;
+  }
+
+}
 
 
-@media (max-width: 768px) {
+@media (max-width: 994px) {
   .navbar {
       flex-wrap: wrap;
       justify-content: center;
