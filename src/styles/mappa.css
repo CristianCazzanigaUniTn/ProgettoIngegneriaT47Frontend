@@ -381,7 +381,7 @@ hr {
   width: 100vw;
   height: calc(100% - 130px);
   background-color: rgba(255, 255, 255, 0.9);
-  z-index: 9999; /* Assicurati che il loader sia sopra tutto tranne la navbar */
+  z-index: 999; /* Assicurati che il loader sia sopra tutto tranne la navbar */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -449,7 +449,7 @@ h1 {
 
 @media (max-width: 994px) {
     #filtroVisualizza {
-        z-index: 999;
+        z-index: 998;
         height: 60px;
         width: 60px;
         position: fixed;
@@ -508,7 +508,7 @@ h1 {
         font-size: 30px;
         font-weight: bold;
         box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.9);
-        z-index: 999;
+        z-index: 998;
         display: flex;
         border: 0px;
         cursor: pointer;
@@ -530,7 +530,7 @@ h1 {
         font-size: 30px;
         font-weight: bold;
         box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.9);
-        z-index: 999;
+        z-index: 998;
         display: flex;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -551,7 +551,7 @@ h1 {
         font-size: 30px;
         font-weight: bold;
         box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.9);
-        z-index: 999;
+        z-index: 998;
         display: flex;
         cursor: pointer;
         transition: all 0.3s ease;

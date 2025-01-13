@@ -1,44 +1,28 @@
 <script setup>
-import { computed, ref, onMounted } from 'vue';
-import { loggedUser, clearLoggedUser } from '@/states/loggedUser.ts';
-import router from '../router';
-import { initializeMap, AggiornaMappa } from '../scripts/MapPage/map';
-// import { inizializeLoader } from '../scripts/MapPage/loader';
+
+//sezione import
+import {ref, onMounted } from 'vue';
+import { initializeMap } from '../scripts/MapPage/map';
 import CreaPostPopup from '@/components/mapComponents/CreaPopup/CreaPostPopup.vue';
 import CreaPartyPopup from '@/components/mapComponents/CreaPopup/CreaPartyPopup.vue';
 import CreaEventoPopup from '@/components/mapComponents/CreaPopup/CreaEventoPopup.vue';
 import PostPopup from '@/components/mapComponents/ViewPopup/VisualizzaPostPopup.vue';
 import SideCard from '@/components/mapComponents/mapElements/SideCard.vue';
 import PartyEventoPopup from '@/components/mapComponents/ViewPopup/VisualizzaEventoParty.vue';
-
 import { showPopupPartyEvento, showPopupCreaEvento, showPopupCreaParty, showPopupCreaPost, showPopupPost, sideCards, openPopup, closePopup, postUserName, postProfilePicture, postTime, postImage, postDescription, userIdView } from '@/scripts/MapPage/PageScript.ts';
 import { isLoading, filtri, selectedOption, selectOption, Aggiorna, CloseAllPopup, idep, organizza, profileNameep, profileImageep, partyImageep, descriptionep, timeep, userIdViewep, maxParticipantsep, categoryep } from '@/scripts/MapPage/PageScript.ts';
+import{isAuthenticated, logUserName, logProfilePicture, logRuolo} from '@/states/loggedUser.ts'
 
 
-
+//sezione costanti
 const filtroSinistra = ref(false);
 const filtroDestra = ref(false);
-
-// Stato di autenticazione
-const isAuthenticated = computed(() => loggedUser.token !== undefined);
-const userId = computed(() => loggedUser.id);
-const username = computed(() => loggedUser.username);
-const userProfilePicture = computed(() => loggedUser.foto_profilo);
-const ruolo = computed(() => loggedUser.ruolo);
-const userName = computed(() => (isAuthenticated.value ? username.value : ''));
-const profilePicture = computed(() => (isAuthenticated.value ? userProfilePicture.value : ''));
-const Ruolo = computed(() => (isAuthenticated.value ? ruolo.value : ''));
-
-CloseAllPopup();
-// Logica di logout
-function handleLogout() {
-  clearLoggedUser();
-  router.push("/login");
-}
+const isMobile = ref(false);
+const mobileSize = 768; //La usiamo per cambiare i bottoni da modalità pc a modalità mobile
 
 
 
-
+//script per inizializare HERE API   DA SPOSTARE
 async function initMap() {
   try {
     initializeMap();
@@ -48,12 +32,13 @@ async function initMap() {
   }
 }
 
-const isMobile = ref(false);
+
+//Inizializzazione pagina 
 onMounted(() => {
-  isMobile.value = window.innerWidth <= 768;
+  CloseAllPopup();
+  isMobile.value = window.innerWidth <= mobileSize;
   initMap();
 });
-
 
 </script>
 
@@ -72,7 +57,7 @@ onMounted(() => {
     <div class="content">
       <!-- Pulsante di creazione Post/Party -->
       <div v-if="isAuthenticated && isMobile" class="mobile-buttons">
-        <div v-if="Ruolo === 'utente_base'">
+        <div v-if="logRuolo === 'utente_base'">
           <button class="floatingPostMobilePost" @click="openPopup('CreaPost')">
             <img src="@/assets/post.png" alt="Post" />
           </button>
@@ -80,7 +65,7 @@ onMounted(() => {
             <img src="@/assets/party.png" alt="Party" />
           </button>
         </div>
-        <div v-else-if="Ruolo === 'organizzatore'">
+        <div v-else-if="logRuolo === 'organizzatore'">
           <button class="floatingPostMobileEvento" @click="openPopup('CreaEvento')">
             <img src="@/assets/shop.png" alt="Evento" />
           </button>
@@ -89,11 +74,11 @@ onMounted(() => {
       <!-- Pulsante di creazione Post/Party per desktop -->
       <div v-else-if="isAuthenticated" id="floatingButton">
         <span class="plus">+</span>
-        <div v-if="Ruolo === 'utente_base'">
+        <div v-if="logRuolo === 'utente_base'">
           <span @click="openPopup('CreaPost')" class="text1">Post</span>
           <span @click="openPopup('CreaParty')" class="text2">Party</span>
         </div>
-        <div v-else-if="Ruolo === 'organizzatore'">
+        <div v-else-if="logRuolo === 'organizzatore'">
           <span @click="openPopup('CreaEvento')" class="text3">Evento</span>
         </div>
       </div>
@@ -105,18 +90,18 @@ onMounted(() => {
 
 
           <div class="filtri">
-            <div class="filter-container" id="filtroVisualizza"  >
-              <img src="@/assets/filtri.png" alt="Filter Icon" style="cursor:pointer;" @mouseenter="!isMobile && (filtroSinistra = true)"
-              @mouseleave="!isMobile && (filtroSinistra = false)"
+            <div class="filter-container" id="filtroVisualizza"  @mouseenter="!isMobile && (filtroSinistra = true)"
+            @mouseleave="!isMobile && (filtroSinistra = false)">
+              <img src="@/assets/filtri.png" alt="Filter Icon" style="cursor:pointer;" 
               @click="isMobile && (filtroSinistra = !filtroSinistra)" />
               <div class="filter-window" v-if="filtroSinistra">
                 <h4>Visualizza</h4>
                 <div class="filter-options">
                   <div>
-                    <label><input type="checkbox" v-model="filtri.post" @change="Aggiorna" /> Post</label>
-                    <label><input type="checkbox" v-model="filtri.party" @change="Aggiorna" /> Party</label>
-                    <label><input type="checkbox" v-model="filtri.evento" @change="Aggiorna" /> Eventi</label>
-                    <label><input type="checkbox" v-model="filtri.textual" @change="Aggiorna" /> Text</label>
+                    <label><input type="checkbox" v-model="filtri.post" @change="Aggiorna()" /> Post</label>
+                    <label><input type="checkbox" v-model="filtri.party" @change="Aggiorna()" /> Party</label>
+                    <label><input type="checkbox" v-model="filtri.evento" @change="Aggiorna()" /> Eventi</label>
+                    <label><input type="checkbox" v-model="filtri.textual" @change="Aggiorna()" /> Text</label>
                   </div>
                 </div>
               </div>

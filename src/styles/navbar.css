@@ -186,7 +186,7 @@
   border: 3px solid #192a56; /* Thicker, dark blue border */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Deeper shadow */
   padding: 15px; /* Larger padding for better spacing */
-  z-index: 999;
+  z-index: 99999;
   font-family: sans-serif;
   height: 430px;
   width: 400px;
@@ -196,6 +196,7 @@
 .settings-menu ul {
   list-style: none; /* Remove bullet points */
   margin: 0;
+  z-index: 99999;
   padding: 0;
 }
 
@@ -207,6 +208,7 @@
   font-size: 16px; /* Slightly larger font */
   font-weight: bold; /* Make the text bold */
   color: #333; /* Text color */
+  z-index: 99999;
   cursor: pointer;
   border-bottom: 1px solid #e0e0e0; /* Light divider between items */
 }
@@ -277,6 +279,7 @@
   right: 30px; 
   height: 430px;
   width: 300px;
+
 }
 
   .navbar-left

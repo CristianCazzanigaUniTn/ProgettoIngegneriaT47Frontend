@@ -141,4 +141,3 @@ function showAlert() {
 </template>
 
 <style scoped src="@/styles/navbar.css"></style>
-<style src="@/styles/contenitoreGenerale.css"></style>

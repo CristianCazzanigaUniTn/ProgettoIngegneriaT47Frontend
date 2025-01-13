@@ -58,6 +58,15 @@ export const initializeMap = () => {
 
 };
 
+
+export function getMapCenter(): { lat: number, lng: number } {
+    const center = map.getCenter();
+    return {
+        lat: center.lat,
+        lng: center.lng
+    };
+}
+
 export function apriPopUpAnim(posizione:any){
     behavior.disable();
     map.getViewModel().setLookAtData({
@@ -263,39 +272,13 @@ async function mostraPopupTextual(evt: any, text: any) {
 }
 
 
+
 // Aggiungi questa funzione per teletrasportarti con animazione
 export function teletrasportati(lat: number, lng: number) {
-    if (map) {
-        const duration = 1000; 
-        const stepCount = 60; 
-        
-        let startTime: number | null = null;
-
-        function interpolatePosition(start: number, end: number, step: number) {
-            return start + (end - start) * step / stepCount;
-        }
-
-        // Funzione di animazione
-        function animate(time: number) {
-            if (!startTime) startTime = time;
-            const progress = (time - startTime) / duration; 
-            if (progress < 1) {
-                const center = map.getCenter();
-                const interpolatedLat = interpolatePosition(center.lat, lat, progress * stepCount);
-                const interpolatedLng = interpolatePosition(center.lng, lng, progress * stepCount);
-                map.setCenter({ lat: interpolatedLat, lng: interpolatedLng });
-                requestAnimationFrame(animate);
-            } else {
-                map.setCenter({ lat, lng });
-            }
-        }
-
-        // Avvia l'animazione
-        requestAnimationFrame(animate);
-        Aggiorna(lat, lng);
-    } else {
-       alert("La mappa non è stata inizializzata.");
-    }
+    map.setCenter({ lat, lng });
+    setTimeout(async () => {
+        await Aggiorna();
+    }, 0); 
 }
 
 

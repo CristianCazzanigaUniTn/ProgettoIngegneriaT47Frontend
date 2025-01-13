@@ -1,4 +1,6 @@
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
+
+
 
 
 interface LoggedUser {
@@ -18,6 +20,12 @@ const loggedUser = reactive<LoggedUser>({
     ruolo: undefined
 });
 
+
+export const isAuthenticated = computed(() => loggedUser.token !== undefined);
+export const logUserId = computed(() => loggedUser.id);
+export const logUserName = computed(() => (isAuthenticated.value ? loggedUser.username : ''));
+export const logProfilePicture = computed(() => (isAuthenticated.value ? loggedUser.ruolo : ''));
+export const logRuolo = computed(() => (isAuthenticated.value ? loggedUser.ruolo : ''));
 
 function setLoggedUser(data: LoggedUser): void {
     loggedUser.token = data.token;
