@@ -49,7 +49,7 @@
     align-items: center;
     padding: 20px;
     border-bottom: 1px solid #f2f2f2;
-    background-color: #ffffff;
+    background-color: #c4c4c400;
 }
 
 #popupPartyDiv .instagram-card-user-image {
@@ -90,7 +90,7 @@
 
 #popupPartyDiv .instagram-card-content {
     padding: 20px;
-    background-color: #fafafa;
+    background-color: #fafafa00;
 }
 
 #popupPartyDiv .likes {

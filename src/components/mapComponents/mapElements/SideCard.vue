@@ -1,11 +1,16 @@
 <template>
-    <div class="card" :data-index="dataIndex" :data-type="dataType" @click="apriPopUpVisualizza(props, {lat: props.latitudine, lng: props.longitudine})">
+    <div class="card" :data-index="dataIndex" :data-type="dataType" @click="apriPopUpVisualizza(props, {lat: props.latitudine, lng: props.longitudine})"  :style="{
+        background: dataType === 'party' ? '#e0f7f1' : 
+                    (dataType === 'evento' ? '#cfe2ff' : 
+                    ('#ffffff'))
+     }">
         <div class="card-header">
         
             <img class="card-img-top" :src="profileImage" alt="Foto Profilo">
             <router-link :to="`/profilo/${id}`">
             <strong>{{ profileName }}</strong>
             </router-link>
+            <img :src="imageSrc" alt="Icona Party" class="higIcon">
         </div>
         <div class="card-body" v-if="dataType === 'post' || dataType === 'evento' || dataType === 'party'">
             <img class="post-image" :src="postImage" alt="Foto Post">
@@ -23,6 +28,7 @@
 
 <script setup>
 import { apriPopUpVisualizza } from '@/scripts/MapPage/PageScript';
+import { computed } from 'vue'; 
 
 const props = defineProps({
     profileName: String,
@@ -36,6 +42,27 @@ const props = defineProps({
     id: String
 });
 
+// Importa tutte le immagini
+import partyImageSrc from '@/assets/party.png';
+import eventoImageSrc from '@/assets/shop.png';
+import postImageSrc from '@/assets/post.png';
+import textImageSrc from '@/assets/text.png';
+
+// Computed property per gestire le immagini
+const imageSrc = computed(() => {
+  switch (props.dataType) {
+    case 'party':
+      return partyImageSrc;
+    case 'evento':
+      return eventoImageSrc;
+    case 'post':
+      return postImageSrc;
+    case 'textual':
+      return textImageSrc;
+    default:
+      return '';
+  }
+});
 </script>
 
 <style scoped src="@/styles/mappa.css"></style>

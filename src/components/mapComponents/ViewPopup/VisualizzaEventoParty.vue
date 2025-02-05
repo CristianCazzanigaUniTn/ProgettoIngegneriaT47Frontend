@@ -1,6 +1,8 @@
 <template>
     <div v-if="isVisible" class="popup-overlay">
-    <div id="popupPartyDiv">
+    <div id="popupPartyDiv" :style="{
+        background: isParty ? '#f1fdf9' : '#f0f8ff'
+     }">
         <button id="chiusuraParty" @click="closePopup">×</button>
         <div class="instagram-card">
             <div class="instagram-card-header">
