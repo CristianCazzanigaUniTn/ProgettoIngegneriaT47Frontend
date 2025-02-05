@@ -118,7 +118,7 @@
     height: 40px;
     object-fit: cover;
     margin-right: 15px;
-    z-index: 9999;
+    z-index: 99;
     position: absolute; 
     right: 0; 
 }
