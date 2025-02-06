@@ -1,7 +1,7 @@
 import { ref } from 'vue';
-import { estraiDati, Posted } from './estraiDati';
-import { AggiornaMappa, chiudiPopUpAnim, apriPopUpAnim, getMapCenter, teletrasportati } from './map';
-import { estraiCategorie, estraieventoid, estraipartyid } from './popup';
+import { estraiDati, Posted, estraiCategorie } from './estraiDati';
+import { aggiornaMappa, chiudiPopUpAnim, apriPopUpAnim, getMapCenter, teletrasportati } from './Mappa';
+import { estraieventoid, estraipartyid } from './popup';
 import { loggedUser } from '../../states/loggedUser';
 import {getPosition} from '../Tools/posizione';
 
@@ -62,7 +62,7 @@ export async function aggiornaTutto(filtri: FiltriRicerca, latitudine: number, l
   const shuffledCards = shuffledArray(filteredCards);
   sideCards.value = shuffledCards;
   categorie.value = await estraiCategorie();
-  await AggiornaMappa(shuffledCards);
+  await aggiornaMappa(shuffledCards);
 }
 
 export async function ordinaSidebar(tipo: string = '') {
@@ -106,7 +106,7 @@ export function selectOption(option: string) {
   ordinaSidebar(selectedOption.value);
 }
 
-export async function Aggiorna(rad: number = 15): Promise<void> {
+export async function aggiorna(rad: number = 15): Promise<void> {
   try {
     isLoading.value = true;
     const posizioneCentroMappa = getMapCenter();
@@ -170,6 +170,7 @@ async function setPartyData(dati: any) {
     maxParticipantsep.value = party.maxpartecipanti;
     categoryep.value = party.Categoria;
     timeep.value = party.time;
+    console.log(party.time);
     openPopup('VisualizzaPartyEvento', { lat: dati.latitudine, lng: dati.longitudine });
   }
 }

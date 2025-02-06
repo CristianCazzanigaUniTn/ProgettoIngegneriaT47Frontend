@@ -26,6 +26,8 @@
     </div>
 </template>
 
+
+
 <script setup>
 import { apriPopUpVisualizza } from '@/scripts/MapPage/PageScript';
 import { computed } from 'vue'; 
@@ -42,13 +44,12 @@ const props = defineProps({
     id: String
 });
 
-// Importa tutte le immagini
+
 import partyImageSrc from '@/assets/party.png';
 import eventoImageSrc from '@/assets/shop.png';
 import postImageSrc from '@/assets/post.png';
 import textImageSrc from '@/assets/text.png';
 
-// Computed property per gestire le immagini
 const imageSrc = computed(() => {
   switch (props.dataType) {
     case 'party':

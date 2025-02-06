@@ -1,53 +1,3 @@
-<script setup>
-import { ref } from 'vue';
-import { isAuthenticated, logUserName, logUserId} from '@/states/loggedUser.ts';
-import LoginGoogle from '@/components/loginComponents/LoginGoogle.vue'
-import { login, registerUser, logout } from '@/scripts/LoginPage/login.ts'
-
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `http://localhost:3000`;
-
-const userName = ref('');
-const userUsername = ref('');
-const userEmail = ref('');
-const userPassword = ref('');
-const userGender = ref('');
-const userNotifications = ref(false);
-const userRole = ref('');
-
-const isLoginForm = ref(true);
-
-
-function clear() {
-  isLoginForm.value = !isLoginForm.value;
-  userName.value = '';
-  userUsername.value = '';
-  userEmail.value = '';
-  userPassword.value = '';
-  userGender.value = '';
-  userNotifications.value = false;
-  userRole.value = '';
-}
-
-const profilePicturePreview = ref(null);
-
-var profilePictureFile = '';
-
-function handleProfilePictureChange(event) {
-  const file = event.target.files[0]; 
-  if (file) {
-    profilePictureFile = file;
-    console.log(profilePictureFile);
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-      profilePicturePreview.value = e.target.result; 
-    };
-    reader.readAsDataURL(file);
-  }
-}
-</script>
-
 <template>
   <div class="contenitoreGenerale">
     <form>
@@ -129,6 +79,57 @@ function handleProfilePictureChange(event) {
     </form>
   </div>
 </template>
+
+
+
+<script setup>
+import { ref } from 'vue';
+import { isAuthenticated, logUserName, logUserId} from '@/states/loggedUser.ts';
+import LoginGoogle from '@/components/loginComponents/LoginGoogle.vue'
+import { login, registerUser, logout } from '@/scripts/LoginPage/login.ts'
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `http://localhost:3000`;
+
+const userName = ref('');
+const userUsername = ref('');
+const userEmail = ref('');
+const userPassword = ref('');
+const userGender = ref('');
+const userNotifications = ref(false);
+const userRole = ref('');
+const isLoginForm = ref(true);
+
+
+function clear() {
+  isLoginForm.value = !isLoginForm.value;
+  userName.value = '';
+  userUsername.value = '';
+  userEmail.value = '';
+  userPassword.value = '';
+  userGender.value = '';
+  userNotifications.value = false;
+  userRole.value = '';
+}
+
+const profilePicturePreview = ref(null);
+
+var profilePictureFile = '';
+
+function handleProfilePictureChange(event) {
+  const file = event.target.files[0]; 
+  if (file) {
+    profilePictureFile = file;
+    console.log(profilePictureFile);
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      profilePicturePreview.value = e.target.result; 
+    };
+    reader.readAsDataURL(file);
+  }
+}
+</script>
+
 
 <style scoped src="@/styles/login.css"></style>
 

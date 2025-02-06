@@ -3,7 +3,7 @@ import { computed, ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router'; // Importa useRoute
 import {clearLoggedUser, isAuthenticated, logUserId, logUserName, logProfilePicture } from '@/states/loggedUser.ts';
 import router from '../router';
-import { teletrasportati } from '@/scripts/MapPage/map';
+import { teletrasportati } from '@/scripts/MapPage/Mappa';
 
 
 const API_KEY = import.meta.env.VITE_HERE_API_KEY2;

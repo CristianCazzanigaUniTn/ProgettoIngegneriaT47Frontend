@@ -64,7 +64,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { estraiInformazioniPost, aggiungiCommento, aggiungiLikePost, eliminaLikePost, eliminaPost } from '@/scripts/MapPage/popup.ts';
+import { estraiInformazioniPost, aggiungiCommento, aggiungiLikePost, eliminaLikePost, eliminaPost } from '@/scripts/MapPage/ComponentScripts/VisualizzaPost.ts';
 import { loggedUser } from '@/states/loggedUser.ts';
 import { idp } from '@/scripts/MapPage/PageScript.ts';
 

@@ -1,6 +1,6 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
+import Home from '../views/Login.vue';
 import Mappa from '../views/Mappa.vue';
 import Profilo from '../views/Profilo.vue';
 import ChiSiamo from '../views/ChiSiamo.vue';

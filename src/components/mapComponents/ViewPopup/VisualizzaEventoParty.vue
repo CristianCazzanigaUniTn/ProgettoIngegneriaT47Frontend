@@ -66,13 +66,14 @@
         </div>
     </div>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import { idep, isParty } from "@/scripts/MapPage/PageScript.ts";
 import {
     rispondiFaq, disinscriviEvento, disinscriviParty, eliminaParty, estraiInformazioniEventi, eliminaEvento,
     estraiPartecipazioniParty, partecipaEvento, partecipaParty, aggiungiFaq
-} from "@/scripts/MapPage/popup.ts";
+} from "@/scripts/MapPage/ComponentScripts/VisualizzaPartyEventi.ts";
 import { loggedUser } from "@/states/loggedUser.ts";
 
 const newFaqText = ref('');

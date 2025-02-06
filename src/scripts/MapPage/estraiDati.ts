@@ -126,12 +126,30 @@ async function estraiEventiDaFile(lat: number, lng: number, rad: number, eventi:
     }
 }
 
-async function estraiUtente(userId: string) {
+export async function estraiUtente(userId: string) {
     try {
         const response = await fetch(`${API_BASE_URL}/api/utenti/${userId}`);
         if (!response.ok) return undefined;
         return await response.json();
     } catch (error) {
         return undefined;
+    }
+}
+
+
+// Function to fetch all categories (as per your previous requirement)
+export async function estraiCategorie() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/categoria`);
+        if (!response.ok) {
+            throw new Error(`Errore nella richiesta: ${response.status} ${response.statusText}`);
+        }
+        
+        const categorie = await response.json();
+        return categorie; // Return the list of categories
+        
+    } catch (error) {
+        console.error("Errore nell'estrazione delle categorie:", error);
+        return [];
     }
 }

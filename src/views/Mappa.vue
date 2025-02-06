@@ -1,46 +1,3 @@
-<script setup>
-
-//sezione import
-import {ref, onMounted } from 'vue';
-import { initializeMap } from '../scripts/MapPage/map';
-import CreaPostPopup from '@/components/mapComponents/CreaPopup/CreaPostPopup.vue';
-import CreaPartyPopup from '@/components/mapComponents/CreaPopup/CreaPartyPopup.vue';
-import CreaEventoPopup from '@/components/mapComponents/CreaPopup/CreaEventoPopup.vue';
-import PostPopup from '@/components/mapComponents/ViewPopup/VisualizzaPostPopup.vue';
-import SideCard from '@/components/mapComponents/mapElements/SideCard.vue';
-import PartyEventoPopup from '@/components/mapComponents/ViewPopup/VisualizzaEventoParty.vue';
-import { showPopupPartyEvento, showPopupCreaEvento, showPopupCreaParty, showPopupCreaPost, showPopupPost, sideCards, openPopup, closePopup, postUserName, postProfilePicture, postTime, postImage, postDescription, userIdView } from '@/scripts/MapPage/PageScript.ts';
-import { isLoading, filtri, selectedOption, selectOption, Aggiorna, CloseAllPopup, idep, organizza, profileNameep, profileImageep, partyImageep, descriptionep, timeep, userIdViewep, maxParticipantsep, categoryep } from '@/scripts/MapPage/PageScript.ts';
-import{isAuthenticated, logUserName, logProfilePicture, logRuolo} from '@/states/loggedUser.ts'
-
-
-//sezione costanti
-const filtroSinistra = ref(false);
-const filtroDestra = ref(false);
-const isMobile = ref(false);
-const mobileSize = 768; //La usiamo per cambiare i bottoni da modalità pc a modalità mobile
-
-
-
-//script per inizializare HERE API   DA SPOSTARE
-async function initMap() {
-  try {
-    initializeMap();
-    await Aggiorna();
-  } catch (error) {
-    console.error("Errore durante l'inizializzazione della mappa:", error);
-  }
-}
-
-
-//Inizializzazione pagina 
-onMounted(() => {
-  CloseAllPopup();
-  isMobile.value = window.innerWidth <= mobileSize;
-  initMap();
-});
-
-</script>
 
 
 <template>
@@ -98,10 +55,10 @@ onMounted(() => {
                 <h4>Visualizza</h4>
                 <div class="filter-options">
                   <div>
-                    <label><input type="checkbox" v-model="filtri.post" @change="Aggiorna()" /> Post</label>
-                    <label><input type="checkbox" v-model="filtri.party" @change="Aggiorna()" /> Party</label>
-                    <label><input type="checkbox" v-model="filtri.evento" @change="Aggiorna()" /> Eventi</label>
-                    <label><input type="checkbox" v-model="filtri.textual" @change="Aggiorna()" /> Text</label>
+                    <label><input type="checkbox" v-model="filtri.post" @change="aggiorna()" /> Post</label>
+                    <label><input type="checkbox" v-model="filtri.party" @change="aggiorna()" /> Party</label>
+                    <label><input type="checkbox" v-model="filtri.evento" @change="aggiorna()" /> Eventi</label>
+                    <label><input type="checkbox" v-model="filtri.textual" @change="aggiorna()" /> Text</label>
                   </div>
                 </div>
               </div>
@@ -176,5 +133,43 @@ onMounted(() => {
   </div>
 </template>
 
+
+<script setup>
+import {ref, onMounted } from 'vue';
+import { initMap } from '../scripts/MapPage/Mappa';
+import CreaPostPopup from '@/components/mapComponents/CreaPopup/CreaPostPopup.vue';
+import CreaPartyPopup from '@/components/mapComponents/CreaPopup/CreaPartyPopup.vue';
+import CreaEventoPopup from '@/components/mapComponents/CreaPopup/CreaEventoPopup.vue';
+import PostPopup from '@/components/mapComponents/ViewPopup/VisualizzaPostPopup.vue';
+import SideCard from '@/components/mapComponents/mapElements/SideCard.vue';
+import PartyEventoPopup from '@/components/mapComponents/ViewPopup/VisualizzaEventoParty.vue';
+
+//component popup import
+import { showPopupPartyEvento, showPopupPost, showPopupCreaEvento, showPopupCreaParty, showPopupCreaPost, closePopup, openPopup, CloseAllPopup} from '@/scripts/MapPage/PageScript.ts';
+
+//valori popup post
+import {postUserName, postProfilePicture, postTime, postImage, postDescription, userIdView } from '@/scripts/MapPage/PageScript.ts';
+
+//valori popup party ed evento
+import {profileNameep, profileImageep, partyImageep, descriptionep, timeep, userIdViewep, maxParticipantsep, categoryep, idep } from '@/scripts/MapPage/PageScript.ts';
+
+//
+import {sideCards,  isLoading, filtri, selectedOption, selectOption, aggiorna, organizza} from '@/scripts/MapPage/PageScript.ts';
+
+import{isAuthenticated, logRuolo} from '@/states/loggedUser.ts'
+
+const filtroSinistra = ref(false);
+const filtroDestra = ref(false);
+const isMobile = ref(false);
+const mobileSize = 768;
+
+//Inizializzazione pagina 
+onMounted(() => {
+  CloseAllPopup();
+  isMobile.value = window.innerWidth <= mobileSize;
+  initMap();
+});
+
+</script>
 
 <style scoped src="@/styles/mappa.css"></style>

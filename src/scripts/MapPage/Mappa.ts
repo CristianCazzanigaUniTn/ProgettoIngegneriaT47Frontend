@@ -4,6 +4,8 @@ var behavior: any;
 import { getPosition, Posizione } from '../Tools/posizione';
 let posizione: Posizione | null = await getPosition();
 
+
+
 export const initializeMap = () => {
     // Ottieni la chiave API dalla variabile d'ambiente
     const apikey = import.meta.env.VITE_HERE_API_KEY;
@@ -52,11 +54,21 @@ export const initializeMap = () => {
         }
         style.addEventListener('change', changeListener);
     }
-    
+
 
     interleave();
 
 };
+
+
+export async function initMap() {
+    try {
+        initializeMap();
+        await aggiorna();
+    } catch (error) {
+        console.error("Errore durante l'inizializzazione della mappa:", error);
+    }
+}
 
 
 export function getMapCenter(): { lat: number, lng: number } {
@@ -67,7 +79,7 @@ export function getMapCenter(): { lat: number, lng: number } {
     };
 }
 
-export function apriPopUpAnim(posizione:any){
+export function apriPopUpAnim(posizione: any) {
     behavior.disable();
     map.getViewModel().setLookAtData({
         position: posizione,
@@ -77,15 +89,15 @@ export function apriPopUpAnim(posizione:any){
     });
 }
 
-export function chiudiPopUpAnim(){
+export function chiudiPopUpAnim() {
     behavior.enable();
     map.getViewModel().setLookAtData({
         zoom: 16,
         tilt: 55
     }, {
-        
+
     });
-    
+
 }
 
 //mettere i marker 
@@ -104,26 +116,25 @@ export interface Posted {
 
 let markers: any[] = [];
 
-export async function AggiornaMappa(posteds: Posted[]) {
-    try{
+export async function aggiornaMappa(posteds: Posted[]) {
+    try {
         await removeAllMarkers();
     }
-    catch
-    {
+    catch {
 
     }
-  
+
     posteds.forEach((posted: Posted) => {
         if (posted.dataType == "post") {
             aggiungiPost(posted);
         }
-        else  if (posted.dataType == "textual") {
+        else if (posted.dataType == "textual") {
             aggiungiMessaggio(posted);
         }
-        else  if (posted.dataType == "party") {
+        else if (posted.dataType == "party") {
             aggiungiParty(posted);
         }
-        else  if (posted.dataType == "evento") {
+        else if (posted.dataType == "evento") {
             aggiungiEvento(posted);
         }
     });
@@ -149,14 +160,14 @@ import postImage from '@/assets/post.png';
 import partyImage from '@/assets/party.png';
 import shopImage from '@/assets/shop.png';
 import textImage from '@/assets/text.png';
-import { Aggiorna, apriPopUpVisualizza } from './PageScript';
+import { aggiorna, apriPopUpVisualizza } from './PageScript';
 
 async function aggiungiPost(post: any) {
     var punto = new H.geo.Point(post.latitudine, post.longitudine);
-    var icona = new H.map.Icon(postImage, {size: {w: 60, h: 60} });
+    var icona = new H.map.Icon(postImage, { size: { w: 60, h: 60 } });
     var marker = new H.map.Marker(punto, { icon: icona });
     map.addObject(marker);
-    
+
     markers.push(marker);
 
     marker.addEventListener('tap', function () {
@@ -165,25 +176,25 @@ async function aggiungiPost(post: any) {
     marker.addEventListener('pointerenter', function (evt: any) {
         mostraPopup(evt, post);
     });
-    marker.addEventListener('pointerleave', function(evt: any){ chiudiPopup(evt)});
+    marker.addEventListener('pointerleave', function (evt: any) { chiudiPopup(evt) });
 }
 
 
 async function aggiungiMessaggio(text: any) {
     var punto = new H.geo.Point(text.latitudine, text.longitudine);
-    var icona = new H.map.Icon(textImage, {size: {w: 60, h: 60} });
+    var icona = new H.map.Icon(textImage, { size: { w: 60, h: 60 } });
     var marker = new H.map.Marker(punto, { icon: icona });
     map.addObject(marker);
     markers.push(marker);
     marker.addEventListener('pointerenter', function (evt: any) {
         mostraPopupTextual(evt, text);
     });
-    marker.addEventListener('pointerleave',  function(evt: any){ chiudiPopup(evt)});
+    marker.addEventListener('pointerleave', function (evt: any) { chiudiPopup(evt) });
 }
 
 async function aggiungiParty(party: any) {
     var punto = new H.geo.Point(party.latitudine, party.longitudine);
-    var icona = new H.map.Icon(partyImage, {size: {w: 60, h: 60} });
+    var icona = new H.map.Icon(partyImage, { size: { w: 60, h: 60 } });
     var marker = new H.map.Marker(punto, { icon: icona });
     map.addObject(marker);
     markers.push(marker);
@@ -193,13 +204,13 @@ async function aggiungiParty(party: any) {
     marker.addEventListener('pointerenter', function (evt: any) {
         mostraPopup(evt, party);
     });
-    marker.addEventListener('pointerleave', function(evt: any){ chiudiPopup(evt)});
+    marker.addEventListener('pointerleave', function (evt: any) { chiudiPopup(evt) });
 
 }
 
 async function aggiungiEvento(evento: any) {
     var punto = new H.geo.Point(evento.latitudine, evento.longitudine);
-    var icona = new H.map.Icon(shopImage, {size: {w: 60, h: 60} });
+    var icona = new H.map.Icon(shopImage, { size: { w: 60, h: 60 } });
     var marker = new H.map.Marker(punto, { icon: icona });
     map.addObject(marker);
     markers.push(marker);
@@ -209,7 +220,7 @@ async function aggiungiEvento(evento: any) {
     marker.addEventListener('pointerenter', function (evt: any) {
         mostraPopup(evt, evento);
     });
-    marker.addEventListener('pointerleave', function(evt: any){ chiudiPopup(evt)});
+    marker.addEventListener('pointerleave', function (evt: any) { chiudiPopup(evt) });
 }
 
 
@@ -277,8 +288,8 @@ async function mostraPopupTextual(evt: any, text: any) {
 export function teletrasportati(lat: number, lng: number) {
     map.setCenter({ lat, lng });
     setTimeout(async () => {
-        await Aggiorna();
-    }, 0); 
+        await aggiorna();
+    }, 0);
 }
 
 

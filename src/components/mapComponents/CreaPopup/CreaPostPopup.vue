@@ -46,39 +46,32 @@
 import { computed, ref, onMounted } from 'vue';
 import { loggedUser } from '@/states/loggedUser.ts';
 import { getPosition, fetchCityName } from '@/scripts/Tools/posizione';
-import { Aggiorna } from '@/scripts/MapPage/PageScript';
+import { aggiorna } from '@/scripts/MapPage/PageScript';
+import { createPost, uploadImage } from '@/scripts/MapPage/ComponentScripts/CreaPost';
 
-const isSubmitting = ref(false); // Variabile per il controllo dello stato di invio
-const isAuthenticated = computed(() => loggedUser.token !== undefined);
-const userId = computed(() => loggedUser.id);
+const isSubmitting = ref(false);
 const userName = computed(() => loggedUser.username);
 const profilePicture = computed(() => loggedUser.foto_profilo);
-const emit = defineEmits(['close-popup']);
-const isVisible = ref(true);
 const description = ref('');
 const imagePreview = ref(null);
 const location = ref('');
 const posizionePost = ref();
 const dateTime = ref(new Date().toLocaleString());
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `http://localhost:3000`;
-// Funzione asincrona che verrà eseguita quando il componente è montato
+const isVisible = ref(true);
+const emit = defineEmits(['close-popup']);
+
+
 onMounted(async () => {
   try {
     posizionePost.value = await getPosition();
     location.value = await fetchCityName(posizionePost.value.latitudine, posizionePost.value.longitudine);
-
   } catch (error) {
     console.error('Errore nel recupero della posizione o del luogo:', error);
   }
 });
 
-function closePopup() {
-  emit('close-popup');
-}
-
 function handleImageUpload(event) {
   const file = event.target.files[0];
-
   if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -96,103 +89,41 @@ async function postFormHandler() {
 
   if (descriptionValue === '') {
     alert("Per creare un post è necessario inserire una descrizione.");
-    if (!file) {
-      try {
-        const postData = {
-          descrizione: descriptionValue,
-          contenuto: null,
-          luogo: location.value, // Usa il luogo aggiornato
-          posizione: posizionePost.value,
-          data_creazione: dateTime.value,
-        };
-
-        // Disabilita il bottone "Pubblica"
-        isSubmitting.value = true;
-
-        const postResponse = await fetch(`${API_BASE_URL}/api/Post`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${loggedUser.token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(postData),
-        });
-
-        const postDataResponse = await postResponse.json();
-        alert('Post creato con successo');
-        Aggiorna();
-      } catch (error) {
-        alert('Errore nel caricamento: ' + error);
-      } finally {
-        isSubmitting.value = false; // Riabilita il bottone dopo la richiesta
-      }
-    }
-  } else {
-    const file = document.getElementById('postImage').files[0];
-    const tokenFromStorage = loggedUser.token;
-
-    if (!tokenFromStorage) {
-      throw new Error("Utente non autenticato!");
-    }
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/generate-signed-url-post`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${tokenFromStorage}`,
-        },
-      });
-      const data = await response.json();
-
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", data.upload_preset);
-      formData.append("timestamp", data.timestamp);
-      formData.append("signature", data.signature);
-      formData.append("api_key", data.api_key);
-
-      // Disabilita il bottone "Pubblica"
-      isSubmitting.value = true;
-
-      const uploadResponse = await fetch('https://api.cloudinary.com/v1_1/dc2ga9rlo/image/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const uploadData = await uploadResponse.json();
-
-      imageUrl = uploadData.secure_url || "null";
-
-      const postData = {
-        descrizione: descriptionValue,
-        contenuto: imageUrl,
-        luogo: location.value, // Usa il luogo aggiornato
-        posizione: posizionePost.value, // Ottieni la posizione
-        data_creazione: dateTime.value,
-      };
-
-      const postResponse = await fetch(`${API_BASE_URL}/api/Post`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${tokenFromStorage}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-      });
-
-      const postDataResponse = await postResponse.json();
-      alert('Post creato con successo');
-      Aggiorna();
-    } catch (error) {
-      alert('Errore nel caricamento:' + error);
-    } finally {
-      isSubmitting.value = false; // Riabilita il bottone dopo la richiesta
-    }
+    return; // Esce dalla funzione se la descrizione è vuota
   }
+  const file = document.getElementById('postImage').files[0]; 
+  const tokenFromStorage = loggedUser.token;
+  if (!tokenFromStorage) {
+    alert("Utente non autenticato!");
+    return;
+  }
+  try {
+    if (file) {
+      isSubmitting.value = true; 
+      imageUrl = await uploadImage(file, tokenFromStorage);
+    }
+    const postData = {
+      descrizione: descriptionValue,
+      contenuto: imageUrl || null, 
+      luogo: location.value,
+      posizione: posizionePost.value,
+      data_creazione: dateTime.value,
+    };
+    const postDataResponse = await createPost(postData, tokenFromStorage); 
+    alert('Post creato con successo');
+    aggiorna(); 
+  } catch (error) {
+    alert('Errore nel caricamento: ' + error);
+  } finally {
+    isSubmitting.value = false; 
+  }
+  emit('close-popup'); 
+}
 
+function closePopup() {
   emit('close-popup');
 }
+
 </script>
 
 <style scoped src="@/styles/popupCreaPost.css"></style>
-
-

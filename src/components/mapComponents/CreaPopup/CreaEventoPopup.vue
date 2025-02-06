@@ -66,8 +66,9 @@
 import { ref, computed, onMounted } from 'vue';
 import { loggedUser } from '@/states/loggedUser.ts';
 import { getPosition, fetchCityName } from '@/scripts/Tools/posizione';
-import { Aggiorna, categorie } from '@/scripts/MapPage/PageScript';
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `http://localhost:3000`;
+import { aggiorna, categorie } from '@/scripts/MapPage/PageScript';
+import { uploadImage, createEvent} from '@/scripts/MapPage/ComponentScripts/CreaEvento'; 
+
 
 const isVisible = ref(true);
 const nomeEvento = ref('');
@@ -78,12 +79,11 @@ const eventType = ref('');
 const eventParticipants = ref('');
 const eventDescription = ref('');
 const imagePreview = ref(null);
-const isSubmitting = ref(false);  // Variabile per tenere traccia dello stato di invio del modulo
+const isSubmitting = ref(false);  
 const emit = defineEmits(['close-popup']);
 
 const tokenFromStorage = computed(() => loggedUser.token);
 
-// Funzione asincrona che verrà eseguita quando il componente è montato
 onMounted(async () => {
   try {
     eventPosition.value = await getPosition();
@@ -105,12 +105,10 @@ function handleImageUpload(event) {
         alert('Nessun file selezionato o errore nel caricamento del file.');
         return;
     }
-
     if (!file.type.startsWith('image/')) {
         alert('Il file selezionato non è un\'immagine.');
         return;
     }
-
     const reader = new FileReader();
     reader.onload = (e) => {
         imagePreview.value = e.target.result;
@@ -121,86 +119,44 @@ function handleImageUpload(event) {
     reader.readAsDataURL(file);
 }
 
-function removeImage() {
-    imagePreview.value = null;
-    const input = document.getElementById('immagineEvento');
-    input.value = '';
-}
-
 async function eventFormHandler() {
     if (!nomeEvento.value || !eventDate.value || !eventType.value || !eventParticipants.value || !eventDescription.value) {
         alert('Tutti i campi sono obbligatori.');
         return;
     }
-
     const file = document.getElementById('immagineEvento').files[0];
     if (!file) {
         alert('Per creare un evento è necessario caricare un\'immagine.');
         return;
     }
-
     if (!tokenFromStorage.value) {
         throw new Error('Utente non autenticato!');
     }
-
     try {
-        // Impostiamo isSubmitting a true per bloccare ulteriori invii
+
         isSubmitting.value = true;
-
-        const signedUrlResponse = await fetch(`${API_BASE_URL}/generate-signed-url-eventi`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${tokenFromStorage.value}`,
-            },
-        });
-        const signedUrlData = await signedUrlResponse.json();
-
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', signedUrlData.upload_preset);
-        formData.append('timestamp', signedUrlData.timestamp);
-        formData.append('signature', signedUrlData.signature);
-        formData.append('api_key', signedUrlData.api_key);
-
-        const uploadResponse = await fetch('https://api.cloudinary.com/v1_1/dc2ga9rlo/image/upload', {
-            method: 'POST',
-            body: formData,
-        });
-        const uploadData = await uploadResponse.json();
-        const imageUrl = uploadData.secure_url || 'null';
-
+        const imageUrl = await uploadImage(file, tokenFromStorage.value);
         const eventData = {
             nome: nomeEvento.value,
             data_inizio: eventDate.value,
             luogo: eventLocation.value,
             posizione: eventPosition.value,
-            id_categoria: eventType.value, // Assicurati di usare la categoria giusta
+            id_categoria: eventType.value,
             numero_massimo_partecipanti: parseInt(eventParticipants.value, 10),
             descrizione: eventDescription.value,
             foto: imageUrl,
         };
-
-        const eventResponse = await fetch(`${API_BASE_URL}/api/eventi`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${tokenFromStorage.value}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(eventData),
-        });
-
-        const eventResponseData = await eventResponse.json();
+        const eventResponseData = await createEvent(eventData, tokenFromStorage.value);
         alert('Evento creato con successo');
-        Aggiorna();
+        aggiorna();
     } catch (error) {
-        alert('Errore nel caricamento: ' +  error);
+        alert('Errore nel caricamento: ' + error);
     } finally {
-        // Reset dello stato di invio
         isSubmitting.value = false;
     }
-
     emit('close-popup');
 }
+
 </script>
 
 <style scoped src="@/styles/creaEventoPopUp.css"></style>

@@ -61,45 +61,5 @@
   </div>
 </template>
 
-<script>
-import { getPost, getEvents, getParty } from '@/scripts/ProfilePage/PostCard.ts';
-import { getUser } from '@/scripts/ProfilePage/UserData.ts';
-import Card from '@/components/profileComponents/PostCard.vue';
-import UserProfile from '@/components/profileComponents/UserData.vue';
-
-export default {
-  name: 'Profilo',
-  components: { Card, UserProfile },
-  data() {
-    return {
-      posts: [], // Lista dei post
-      events: [], // Lista degli eventi
-      parties: [], // Lista dei party
-      userProfile: null, // Dati dell'utente
-    };
-  },
-  async created() {
-    const id = this.$route.params.id;
-    try {
-      this.userProfile = await getUser(id);
-
-      // Recupero di tutti i contenuti
-      const [posts, events, parties] = await Promise.all([
-        getPost(id),
-        getEvents(id),
-        getParty(id),
-      ]);
-
-      // Assegna i risultati alle rispettive variabili
-      this.posts = posts;
-      this.events = events;
-      this.parties = parties;
-    } catch (error) {
-      console.error('Errore durante il caricamento del profilo o dei contenuti:', error);
-    }
-  },
-};
-</script>
-
-
+<script src='@/scripts/ProfilePage/Profilo.ts'></script>
 <style scoped src="@/styles/profile.css"></style>
