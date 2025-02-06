@@ -1,5 +1,6 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `http://localhost:3000`;
 import { loggedUser } from "../../../states/loggedUser";
+import { aggiorna } from "../PageScript";
 //SEZIONE EVENTO
 
 //Ritorna il numero di partecipazioni ad un Evento e le sue faq
@@ -131,7 +132,8 @@ export async function eliminaEvento(id_evento: any) {
         if (!response.ok) {
             throw new Error(`Errore nella richiesta: ${response.status} ${response.statusText}`);
         }
-
+        
+        aggiorna();
     } catch (error) {
         alert("Errore durante l'eliminazione: " + error);
     }

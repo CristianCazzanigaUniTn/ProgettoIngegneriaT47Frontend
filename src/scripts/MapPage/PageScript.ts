@@ -1,7 +1,6 @@
 import { ref } from 'vue';
-import { estraiDati, Posted, estraiCategorie } from './estraiDati';
+import { estraiDati, Posted, estraiCategorie, estraieventoid, estraipartyid } from './estraiDati';
 import { aggiornaMappa, chiudiPopUpAnim, apriPopUpAnim, getMapCenter, teletrasportati } from './Mappa';
-import { estraieventoid, estraipartyid } from './popup';
 import { loggedUser } from '../../states/loggedUser';
 import {getPosition} from '../Tools/posizione';
 

@@ -1,6 +1,7 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `http://localhost:3000`;
 import { loggedUser } from "../../../states/loggedUser";
 import { estraiUtente } from "../estraiDati";
+import { aggiorna } from "../PageScript";
 
 
 //Estrai like (con id e nome utente) e commenti (con id e nome utente, testo e numero di like) di un post
@@ -98,7 +99,6 @@ export async function aggiungiLikePost(post_id: any) {
     }
 }
 
-
 export async function eliminaLikePost(like_id: any) {
     try {
         const response = await fetch(`${API_BASE_URL}/api/like/${like_id}`, {
@@ -107,11 +107,10 @@ export async function eliminaLikePost(like_id: any) {
                 'Authorization': `Bearer ${loggedUser.token}`
             }
         });
-
         if (!response.ok) {
             throw new Error(`Errore nella richiesta: ${response.status} ${response.statusText}`);
         }
-
+        aggiorna();
     } catch (error) {
         alert("Errore nell'elminazione: " + error);
     }

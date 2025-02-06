@@ -151,9 +151,6 @@ function removeAllMarkers() {
 
 
 
-
-
-
 //GESTIONE AGGIUNTA MARKER E DIVE (POSSIBILITA DI DIVIDERLO IN PIU FILE)
 
 import postImage from '@/assets/post.png';
