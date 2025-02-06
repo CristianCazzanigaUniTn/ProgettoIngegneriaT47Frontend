@@ -17,12 +17,12 @@ export async function getPosition(): Promise<Posizione> {
                 },
                 () => {
                     console.warn("Impossibile ottenere la posizione, si utilizza la posizione di Trento.");
-                    resolve({ latitudine: 46.066667, longitudine: 11.133333 });
+                    resolve({ latitudine: 46.0731, longitudine: 11.1213 });
                 }
             );
         } else {
             console.warn("Geolocalizzazione non supportata, si utilizza la posizione di Trento.");
-            resolve({ latitudine: 46.066667, longitudine: 11.133333 }); 
+            resolve({ latitudine: 46.0731, longitudine: 11.1213 }); 
         }
     });
 }

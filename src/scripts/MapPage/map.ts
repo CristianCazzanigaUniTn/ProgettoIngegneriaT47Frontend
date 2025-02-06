@@ -32,8 +32,8 @@ export const initializeMap = () => {
 
     map.addEventListener('mapviewchange', function () {
         var zoomLevel = map.getZoom();
-        if (zoomLevel < 14) {
-            map.setZoom(14);
+        if (zoomLevel < 15.8) {
+            map.setZoom(15.8);
         }
     });
     window.addEventListener('resize', () => map.getViewPort().resize());

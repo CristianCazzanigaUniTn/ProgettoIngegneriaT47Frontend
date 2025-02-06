@@ -21,11 +21,50 @@ const loggedUser = reactive<LoggedUser>({
 });
 
 
-export const isAuthenticated = computed(() => loggedUser.token !== undefined);
+export function setLoggedUserFromToken() {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        console.error("Nessun token trovato in localStorage");
+        return;
+    }
+    fetch('https://eventlyapi.onrender.com/api/v1/users', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    })
+        .then((resp) => resp.json())
+        .then((data) => {
+            if (data.success) {
+                setLoggedUser(data.user);
+                loggedUser.token = token;
+            } else {
+                console.error("Errore nel recupero dei dati utente");
+            }
+        })
+        .catch((error) => {
+            console.error("Errore nella richiesta dell'utente:", error);
+        });
+}
+
+
+export const isAuthenticated = computed( () => {
+    if (loggedUser.token !== undefined) {
+        return true;
+    }
+    const token = localStorage.getItem('authToken');
+    if (token) {
+        setLoggedUserFromToken();
+        console.log(loggedUser.foto_profilo);
+    }
+    return loggedUser.username !== undefined;
+});
+
 export const logUserId = computed(() => loggedUser.id);
-export const logUserName = computed(() => (isAuthenticated.value ? loggedUser.username : ''));
-export const logProfilePicture = computed(() => (isAuthenticated.value ? loggedUser.ruolo : ''));
-export const logRuolo = computed(() => (isAuthenticated.value ? loggedUser.ruolo : ''));
+export const logUserName = computed( () => ( isAuthenticated.value ? loggedUser.username : ''));
+export const logProfilePicture = computed(() => ( isAuthenticated.value ? loggedUser.foto_profilo : ''));
+export const logRuolo = computed( () => ( isAuthenticated.value ? loggedUser.ruolo : ''));
 
 function setLoggedUser(data: LoggedUser): void {
     loggedUser.token = data.token;
@@ -47,4 +86,4 @@ function clearLoggedUser(): void {
 
 
 
-export { loggedUser, setLoggedUser, clearLoggedUser};
+export { loggedUser, setLoggedUser, clearLoggedUser };

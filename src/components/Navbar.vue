@@ -1,14 +1,10 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router'; // Importa useRoute
-import { loggedUser, clearLoggedUser } from '@/states/loggedUser.ts';
+import {clearLoggedUser, isAuthenticated, logUserId, logUserName, logProfilePicture } from '@/states/loggedUser.ts';
 import router from '../router';
 import { teletrasportati } from '@/scripts/MapPage/map';
 
-const isAuthenticated = computed(() => loggedUser.token !== undefined);
-const userId = computed(() => loggedUser.id);
-const username = computed(() => loggedUser.username);
-const userProfilePicture = computed(() => loggedUser.foto_profilo);
 
 const API_KEY = import.meta.env.VITE_HERE_API_KEY2;
 const searchQuery = ref('');
@@ -67,7 +63,8 @@ function handleSuggestionClick(city) {
 
 function handleLogout() {
   clearLoggedUser();
-  router.push('/login');
+  localStorage.removeItem('authToken'); 
+  router.push("/login");
 }
 
 const showSearchBar = computed(() => route.path === '/');
@@ -88,10 +85,10 @@ function showAlert() {
       <h1>Evently</h1>
     </div>
     <div class="navbar-center">
-      <router-link v-if="isAuthenticated" :to="`/profilo/${userId}`" id="profilo">
+      <router-link v-if="isAuthenticated" :to="`/profilo/${logUserId}`" id="profilo">
         <span class="username">
-          <img v-if="userProfilePicture" :src="userProfilePicture" alt="Foto Profilo" class="profile-picture" />
-          <span class="nomeProfilo">{{ username }}</span>
+          <img v-if="logProfilePicture" :src="logProfilePicture" alt="Foto Profilo" class="profile-picture" />
+          <span class="nomeProfilo">{{ logUserName }}</span>
         </span>
       </router-link>
       <router-link v-if="!isAuthenticated" to="/login" id="home">ACCEDI</router-link>

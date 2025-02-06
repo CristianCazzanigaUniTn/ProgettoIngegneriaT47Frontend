@@ -1,80 +1,73 @@
 <template>
     <div v-if="isVisible" class="popup-overlay">
-    <div id="popupPartyDiv" :style="{
-        background: isParty ? '#f1fdf9' : '#f0f8ff'
-     }">
-        <button id="chiusuraParty" @click="closePopup">×</button>
-        <div class="instagram-card">
-            <div class="instagram-card-header">
-                <img :src="profileImageEP" alt="Profile Picture" class="instagram-card-user-image" />
-                <div>
-                    <a :href="`/profilo/${userIdViewEP}`" class="instagram-card-user-name">{{ profileNameEP }}</a>
-                    <div class="instagram-card-time">{{ timeEP }}</div>
+        <div id="popupPartyDiv" :style="{
+            background: isParty ? '#f1fdf9' : '#f0f8ff'
+        }">
+            <button id="chiusuraParty" @click="closePopup">×</button>
+            <div class="instagram-card">
+                <div class="instagram-card-header">
+                    <img :src="profileImageEP" alt="Profile Picture" class="instagram-card-user-image" />
+                    <div>
+                        <a :href="`/profilo/${userIdViewEP}`" class="instagram-card-user-name">{{ profileNameEP }}</a>
+                        <div class="instagram-card-time">{{ timeEP }}</div>
+                    </div>
+                </div>
+                <div class="instagram-card-image">
+                    <img :src="partyImageEP" alt="Foto del party" />
+                </div>
+                <div class="instagram-card-content">
+                    <p id="descrizioneParty" class="likes">{{ descriptionEP }}</p>
+                    <div class="categorie">
+                        <span class="categorie-item">{{ categoryEP }}</span>
+                    </div>
+                    <p class="partecipanti">
+                        <span>{{ currentPartecipants }}</span> / <span>{{ maxParticipantsEP }}</span> partecipanti
+                    </p>
+                    <button id="azionePartyButton" class="button-iscrizione" @click="inscriviAEventoParty"
+                        v-if="!partecipa && !organizzaEP && loggedUser.token !== undefined && loggedUser.ruolo === 'utente_base'">
+                        Iscriviti
+                    </button>
+                    <button id="azionePartyButton" class="button-iscrizione" @click="disinscriviDaEventoParty"
+                        v-if="partecipa && loggedUser.token !== undefined && loggedUser.ruolo === 'utente_base'">
+                        Disiscriviti
+                    </button>
+                    <button id="azionePartyButton" class="button-iscrizione" @click="eliminaEventoParty"
+                        v-if="organizzaEP && loggedUser.token !== undefined">
+                        Elimina
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="faq-input-container" v-if="!isParty && loggedUser.token !== undefined">
+
+                <textarea id="faqInput" class="faq-input"
+                    :placeholder="organizzaEP ? 'Rispondi ad una domanda...' : 'Scrivi una domanda...'"
+                    v-model="newFaqText">
+                </textarea>
+
+                <button id="faqSubmit" class="faq-submit" @click="organizzaEP ? AnswerFaq() : addFaq()">
+                    <span class="arrow-icon">&gt;</span>
+                </button>
+            </div>
+
+
+            <div v-if="!isParty">
+                <div v-for="(f, index) in faq" :key="f.domanda" class="faq-list">
+                    <div class="faq-item" :class="{ 'selected-faq': selectedFaqIndex === index }"
+                        @click="loggedUser.token !== undefined && organizzaEP ? selezionaFaq(index, f) : null">
+                        <p><strong>Domanda:</strong> {{ f.domanda }}</p>
+                        <p class="faq-risposta"><strong>{{ f.risposta }}</strong></p>
+                    </div>
                 </div>
             </div>
-            <div class="instagram-card-image">
-                <img :src="partyImageEP" alt="Foto del party" />
-            </div>
-            <div class="instagram-card-content">
-                <p id="descrizioneParty" class="likes">{{ descriptionEP }}</p>
-                <div class="categorie">
-                    <span class="categorie-item">{{ categoryEP }}</span>
-                </div>
-                <p class="partecipanti">
-                    <span>{{ currentPartecipants }}</span> / <span>{{ maxParticipantsEP }}</span> partecipanti
-                </p>
-                <button id="azionePartyButton" class="button-iscrizione" @click="inscriviAEventoParty"
-                v-if="!partecipa && !organizzaEP && loggedUser.token !== undefined && loggedUser.ruolo === 'utente_base'">
-                Iscriviti
-            </button>
-            <button id="azionePartyButton" class="button-iscrizione" @click="disinscriviDaEventoParty"
-                v-if="partecipa && loggedUser.token !== undefined && loggedUser.ruolo === 'utente_base'">
-                Disiscriviti
-            </button>
-            <button id="azionePartyButton" class="button-iscrizione" @click="eliminaEventoParty"
-                v-if="organizzaEP && loggedUser.token !== undefined">
-                Elimina
-            </button>
-            </div>
-          
+
+
         </div>
-
-        <div class="faq-input-container" v-if="!isParty && loggedUser.token !== undefined">
-            <div v-if="loggedUser.ruolo !== 'organizzatore'">
-            <textarea 
-                id="faqInput" 
-                class="faq-input" 
-                :placeholder="organizzaEP ? 'Rispondi ad una domanda...' : 'Scrivi una domanda...'" 
-                v-model="newFaqText">
-            </textarea>
-            </div>
-            <button 
-                id="faqSubmit" 
-                class="faq-submit" 
-                @click="organizzaEP ? AnswerFaq() : addFaq()">
-                <span class="arrow-icon">&gt;</span>
-            </button>
-        </div>
-
-
-        <div v-if="!isParty">
-            <div v-for="(f, index) in faq" :key="f.domanda" class="faq-list">
-                <div 
-                    class="faq-item" 
-                    :class="{ 'selected-faq': selectedFaqIndex === index }" 
-                    @click="loggedUser.token !== undefined && organizzaEP ? selezionaFaq(index, f) : null">
-                    <p><strong>Domanda:</strong> {{ f.domanda }}</p>
-                    <p class="faq-risposta"><strong>{{ f.risposta }}</strong></p>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
     </div>
 </template>
 <script setup>
-import { ref, onMounted  } from 'vue';
+import { ref, onMounted } from 'vue';
 import { idep, isParty } from "@/scripts/MapPage/PageScript.ts";
 import {
     rispondiFaq, disinscriviEvento, disinscriviParty, eliminaParty, estraiInformazioniEventi, eliminaEvento,
@@ -150,7 +143,7 @@ async function addFaq() {
         newFaqText.value = '';
         await refresh();
     }
-    
+
 }
 
 async function refresh() {
@@ -161,7 +154,7 @@ async function refresh() {
         partecipa.value = infoEvento.partecipa;
         currentPartecipants.value = infoEvento.numero_partecipazioni;
         faq.value = infoEvento.faq;
-        
+
     } else {
         const infoParty = await estraiPartecipazioniParty(idep.value);
 
@@ -173,7 +166,7 @@ async function refresh() {
 function selezionaFaq(index, faq) {
     selectedFaqIndex.value = index; // Imposta l'indice dell'elemento selezionato
     selectedFaq.value = faq;
-    
+
 }
 
 async function AnswerFaq() {

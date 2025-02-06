@@ -2,6 +2,17 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `http://localhost:3000`;
 
 
+export async function verificaUtente(token: any) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/verify?token=${encodeURIComponent(token)}`);
+        if (!response.ok) {
+            throw new Error(`Errore nella richiesta: ${response.status} ${response.statusText}`);
+        }
+    } catch (error) {
+        alert("Errore nella verifica: " + error);
+    }
+}
+
 
 export async function sendEmail(username: string, email: string, verificationToken: string) {
     const emailSubject = 'Messaggio di verifica per la registrazione';

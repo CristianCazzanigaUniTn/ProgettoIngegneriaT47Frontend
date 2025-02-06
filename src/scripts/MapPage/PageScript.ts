@@ -1,8 +1,9 @@
 import { ref } from 'vue';
 import { estraiDati, Posted } from './estraiDati';
-import { AggiornaMappa, chiudiPopUpAnim, apriPopUpAnim, getMapCenter } from './map';
+import { AggiornaMappa, chiudiPopUpAnim, apriPopUpAnim, getMapCenter, teletrasportati } from './map';
 import { estraiCategorie, estraieventoid, estraipartyid } from './popup';
 import { loggedUser } from '../../states/loggedUser';
+import {getPosition} from '../Tools/posizione';
 
 export const showPopupCreaPost = ref(false);
 export const showPopupCreaEvento = ref(false);
@@ -74,8 +75,14 @@ export async function ordinaSidebar(tipo: string = '') {
   sideCards.value = cards;
 }
 
-export function openPopup(type:any, posizione:any) {
+export async function openPopup(type:any, posizione:any) {
   CloseAllPopup();
+  if (posizione == null && (type == "CreaPost" || type == "CreaParty" || type == "CreaEvento")) {
+    var posizione2 = await getPosition();
+    posizione = { lat: posizione2.latitudine, lng: posizione2.longitudine };
+    teletrasportati(posizione.lat, posizione.lng);
+}
+  console.log(posizione);
   apriPopUpAnim(posizione);
   if (type == "CreaPost") showPopupCreaPost.value = true;
   if (type == "CreaParty") showPopupCreaParty.value = true;

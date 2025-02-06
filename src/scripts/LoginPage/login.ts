@@ -34,6 +34,8 @@ function generateVerificationToken() {
 
 export function logout() {
     clearLoggedUser();
+    localStorage.removeItem('authToken'); 
+    router.push("/login");
 }
   
 
@@ -50,7 +52,7 @@ export function login(user: UserLogin) {
             .then((resp) => resp.json())
             .then(function (data) {
                 setLoggedUser(data);
-                // emit('login', loggedUser);
+                localStorage.setItem('authToken', data.token);
                 if (loggedUser.token) {
                     router.push("/");
                 }
