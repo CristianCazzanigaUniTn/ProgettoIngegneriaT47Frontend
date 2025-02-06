@@ -20,24 +20,24 @@ export const isLoading = ref(true);
 export var sideCards = ref<Posted[]>([]);
 export var categorie = ref([]);
 export var postUserName = ref('');
-export var userIdView = ref('');
+export var postUserId = ref('');
 export var postProfilePicture = ref('');
 export var postTime = ref('');
 export var postImage = ref('');
 export var postDescription = ref('');
-export var idp = ref('');
-export var profileNameep = ref('');
-export var userIdViewep = ref('');
-export var profileImageep = ref('');
-export var timeep = ref('');
-export var partyImageep = ref('');
-export var descriptionep = ref('');
+export var postId = ref('');
+export var eventUsername = ref('');
+export var eventUserId = ref('');
+export var eventProfilePicture = ref('');
+export var eventTime = ref('');
+export var eventImage = ref('');
+export var eventDescription = ref('');
 export var currentParticipantsep = ref();
-export var maxParticipantsep = ref('');
-export var categoryep = ref('');
+export var eventMaxPartecipants = ref('');
+export var eventCategory = ref('');
 export var organizza = ref();
 export var isParty = ref();
-export var idep = ref('');
+export var eventId = ref('');
 
 
 export interface FiltriRicerca {
@@ -145,10 +145,10 @@ function shuffledArray(array: any[]) {
 
 
 async function setPostData(dati: any) {
-  idp.value = dati.dataIndex;
+  postId.value = dati.dataIndex;
   organizza.value = (dati.id === loggedUser.id);
   postUserName.value = dati.profileName;
-  userIdView.value = dati.id;
+  postUserId.value = dati.id;
   postProfilePicture.value = dati.profileImage;
   postTime.value = '12 dicembre';
   postImage.value = dati.postImage;
@@ -158,17 +158,17 @@ async function setPostData(dati: any) {
 async function setPartyData(dati: any) {
   organizza.value = (dati.id === loggedUser.id);
   isParty.value = true;
-  idep.value = dati.dataIndex;
+  eventId.value = dati.dataIndex;
   const party = await estraipartyid(dati.dataIndex);
   if (party) {
-    profileNameep.value = party.profileName;
-    userIdViewep.value = party.id;
-    profileImageep.value = party.profileImage;
-    partyImageep.value = party.postImage;
-    descriptionep.value = party.description;
-    maxParticipantsep.value = party.maxpartecipanti;
-    categoryep.value = party.Categoria;
-    timeep.value = party.time;
+    eventUsername.value = party.profileName;
+    eventUserId.value = party.id;
+    eventProfilePicture.value = party.profileImage;
+    eventImage.value = party.postImage;
+    eventDescription.value = party.description;
+    eventMaxPartecipants.value = party.maxpartecipanti;
+    eventCategory.value = party.Categoria;
+    eventTime.value = party.time;
     console.log(party.time);
     openPopup('VisualizzaPartyEvento', { lat: dati.latitudine, lng: dati.longitudine });
   }
@@ -177,17 +177,17 @@ async function setPartyData(dati: any) {
 async function setEventoData(dati: any) {
   organizza.value = (dati.id === loggedUser.id);
   isParty.value = false;
-  idep.value = dati.dataIndex;
+  eventId.value = dati.dataIndex;
   const evento = await estraieventoid(dati.dataIndex);
   if (evento) {
-    profileNameep.value = evento.profileName;
-    userIdViewep.value = evento.id;
-    profileImageep.value = evento.profileImage;
-    timeep.value = evento.time;
-    partyImageep.value = evento.postImage;
-    descriptionep.value = evento.description;
-    maxParticipantsep.value = evento.maxpartecipanti;
-    categoryep.value = evento.Categoria;
+    eventUsername.value = evento.profileName;
+    eventUserId.value = evento.id;
+    eventProfilePicture.value = evento.profileImage;
+    eventTime.value = evento.time;
+    eventImage.value = evento.postImage;
+    eventDescription.value = evento.description;
+    eventMaxPartecipants.value = evento.maxpartecipanti;
+    eventCategory.value = evento.Categoria;
     openPopup('VisualizzaPartyEvento', { lat: dati.latitudine, lng: dati.longitudine });
   }
 }

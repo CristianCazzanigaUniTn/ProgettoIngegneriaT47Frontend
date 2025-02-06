@@ -112,13 +112,13 @@
     <!-- Popup per la visualizzazione del Post -->
     <PostPopup v-if="showPopupPost" :isVisible="showPopupPost" :profileName="postUserName"
       :profileImage="postProfilePicture" :postImage="postImage" :description="postDescription" :time="postTime"
-      :userIdView="userIdView" :organizzaP="organizza" @close-popup="closePopup('VisualizzaPost')" />
+      :postUserId="postUserId" :organizzaP="organizza" @close-popup="closePopup('VisualizzaPost')" />
 
     <!-- Popup per la visualizzazione del Party/Evento -->
-    <PartyEventoPopup v-if="showPopupPartyEvento" :isVisible="showPopupPartyEvento" :profileNameEP="profileNameep"
-      :profileImageEP="profileImageep" :partyImageEP="partyImageep" :descriptionEP="descriptionep" :timeEP="timeep"
-      :userIdViewEP="userIdViewep" :maxParticipantsEP="maxParticipantsep" :categoryEP="categoryep"
-      :organizzaEP="organizza" :idEP="idep" @close-popup="closePopup('VisualizzaPartyEvento')" />
+    <PartyEventoPopup v-if="showPopupPartyEvento" :isVisible="showPopupPartyEvento" :eventUsername="eventUsername"
+      :eventProfilePicture="eventProfilePicture" :eventImage="eventImage" :eventDescription="eventDescription" :eventTime="eventTime"
+      :eventUserId="eventUserId" :eventMaxPartecipants="eventMaxPartecipants" :eventCategory="eventCategory"
+      :organizzaEP="organizza" :eventId="eventId" @close-popup="closePopup('VisualizzaPartyEvento')" />
 
     <!-- Popup per la creazione di Post -->
     <CreaPostPopup v-if="showPopupCreaPost" :isVisible="showPopupCreaPost" :userName="userName"
@@ -148,10 +148,10 @@ import PartyEventoPopup from '@/components/mapComponents/ViewPopup/VisualizzaEve
 import { showPopupPartyEvento, showPopupPost, showPopupCreaEvento, showPopupCreaParty, showPopupCreaPost, closePopup, openPopup, CloseAllPopup} from '@/scripts/MapPage/PageScript.ts';
 
 //valori popup post
-import {postUserName, postProfilePicture, postTime, postImage, postDescription, userIdView } from '@/scripts/MapPage/PageScript.ts';
+import {postUserName, postProfilePicture, postTime, postImage, postDescription, postUserId } from '@/scripts/MapPage/PageScript.ts';
 
 //valori popup party ed evento
-import {profileNameep, profileImageep, partyImageep, descriptionep, timeep, userIdViewep, maxParticipantsep, categoryep, idep } from '@/scripts/MapPage/PageScript.ts';
+import {eventUsername, eventProfilePicture, eventImage, eventDescription, eventTime, eventUserId, eventMaxPartecipants, eventCategory, eventId } from '@/scripts/MapPage/PageScript.ts';
 
 //
 import {sideCards,  isLoading, filtri, selectedOption, selectOption, aggiorna, organizza} from '@/scripts/MapPage/PageScript.ts';

@@ -4,11 +4,11 @@
         <button id="chiusura" @click="closePopup" class="close-button">×</button>
         <div class="instagram-card">
             <div class="instagram-card-header">
-                <router-link :to="`/profilo/${userIdView}`">
+                <router-link :to="`/profilo/${postUserId}`">
                     <img :src="profileImage" alt="Profile Picture" class="instagram-card-user-image" />
                 </router-link>
                 <div>
-                    <router-link :to="`/profilo/${userIdView}`">
+                    <router-link :to="`/profilo/${postUserId}`">
                         <a class="instagram-card-user-name">{{ profileName }}</a>
                     </router-link>
                     <div class="instagram-card-time">{{ time }}</div>
@@ -66,7 +66,7 @@
 import { ref, onMounted } from 'vue';
 import { estraiInformazioniPost, aggiungiCommento, aggiungiLikePost, eliminaLikePost, eliminaPost } from '@/scripts/MapPage/ComponentScripts/VisualizzaPost.ts';
 import { loggedUser } from '@/states/loggedUser.ts';
-import { idp } from '@/scripts/MapPage/PageScript.ts';
+import { postId } from '@/scripts/MapPage/PageScript.ts';
 
 const newCommentText = ref('');
 
@@ -96,7 +96,7 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    userIdView: {
+    postUserId: {
         type: String, // Oppure number se l'ID è numerico
         required: true,
     },
@@ -119,7 +119,7 @@ async function addComment() {
         alert("Il commento non può essere vuoto");
         return;
     } else {
-        await aggiungiCommento(idp.value, newCommentText.value)
+        await aggiungiCommento(postId.value, newCommentText.value)
         newCommentText.value = '';
     }
 
@@ -129,7 +129,7 @@ async function addComment() {
 
 async function deletePost() {
     
-    await eliminaPost(idp.value)
+    await eliminaPost(postId.value)
     closePopup();
 }
 
@@ -139,14 +139,14 @@ async function likePost() {
         if (idLike.value) {
             eliminaLikePost(idLike.value);
         } else {
-            await aggiungiLikePost(idp.value);
+            await aggiungiLikePost(postId.value);
         }
     }
     await refresh();
 }
 
 async function refresh() {
-    const infoPost = await estraiInformazioniPost(idp.value);
+    const infoPost = await estraiInformazioniPost(postId.value);
     idLike.value = infoPost.idLike;
     like.value = infoPost.like.length;
     commenti.value = infoPost.commenti;

@@ -6,22 +6,22 @@
             <button id="chiusuraParty" @click="closePopup">×</button>
             <div class="instagram-card">
                 <div class="instagram-card-header">
-                    <img :src="profileImageEP" alt="Profile Picture" class="instagram-card-user-image" />
+                    <img :src="eventProfilePicture" alt="Profile Picture" class="instagram-card-user-image" />
                     <div>
-                        <a :href="`/profilo/${userIdViewEP}`" class="instagram-card-user-name">{{ profileNameEP }}</a>
-                        <div class="instagram-card-time">{{ timeEP }}</div>
+                        <a :href="`/profilo/${eventUserId}`" class="instagram-card-user-name">{{ eventUsername }}</a>
+                        <div class="instagram-card-time">{{ eventTime }}</div>
                     </div>
                 </div>
                 <div class="instagram-card-image">
-                    <img :src="partyImageEP" alt="Foto del party" />
+                    <img :src="eventImage" alt="Foto del party" />
                 </div>
                 <div class="instagram-card-content">
-                    <p id="descrizioneParty" class="likes">{{ descriptionEP }}</p>
+                    <p id="descrizioneParty" class="likes">{{ eventDescription }}</p>
                     <div class="categorie">
-                        <span class="categorie-item">{{ categoryEP }}</span>
+                        <span class="categorie-item">{{ eventCategory }}</span>
                     </div>
                     <p class="partecipanti">
-                        <span>{{ currentPartecipants }}</span> / <span>{{ maxParticipantsEP }}</span> partecipanti
+                        <span>{{ currentPartecipants }}</span> / <span>{{ eventMaxPartecipants }}</span> partecipanti
                     </p>
                     <button id="azionePartyButton" class="button-iscrizione" @click="inscriviAEventoParty"
                         v-if="!partecipa && !organizzaEP && loggedUser.token !== undefined && loggedUser.ruolo === 'utente_base'">
@@ -69,7 +69,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { idep, isParty } from "@/scripts/MapPage/PageScript.ts";
+import { eventId, isParty } from "@/scripts/MapPage/PageScript.ts";
 import {
     rispondiFaq, disinscriviEvento, disinscriviParty, eliminaParty, estraiInformazioniEventi, eliminaEvento,
     estraiPartecipazioniParty, partecipaEvento, partecipaParty, aggiungiFaq
@@ -85,35 +85,35 @@ const faq = ref([]);
 
 // Props accettati dal componente
 defineProps({
-    profileNameEP: {
+    eventUsername: {
         type: String,
         required: true,
     },
-    profileImageEP: {
+    eventProfilePicture: {
         type: String,
         required: true,
     },
-    partyImageEP: {
+    eventImage: {
         type: String,
         required: true,
     },
-    descriptionEP: {
+    eventDescription: {
         type: String,
         required: true,
     },
-    timeEP: {
+    eventTime: {
         type: String,
         required: true,
     },
-    userIdViewEP: {
+    eventUserId: {
         type: String, // Oppure number se l'ID è numerico
         required: true,
     },
-    maxParticipantsEP: {
+    eventMaxPartecipants: {
         type: Number,
         required: true,
     },
-    categoryEP: {
+    eventCategory: {
         type: String, // Oppure number se l'ID è numerico
         required: true,
     },
@@ -140,7 +140,7 @@ async function addFaq() {
         alert("La faq non può essere vuota");
         return;
     } else {
-        aggiungiFaq(idep.value, newFaqText.value);
+        aggiungiFaq(eventId.value, newFaqText.value);
         newFaqText.value = '';
         await refresh();
     }
@@ -150,14 +150,14 @@ async function addFaq() {
 async function refresh() {
 
     if (!isParty.value) {
-        const infoEvento = await estraiInformazioniEventi(idep.value);
+        const infoEvento = await estraiInformazioniEventi(eventId.value);
 
         partecipa.value = infoEvento.partecipa;
         currentPartecipants.value = infoEvento.numero_partecipazioni;
         faq.value = infoEvento.faq;
 
     } else {
-        const infoParty = await estraiPartecipazioniParty(idep.value);
+        const infoParty = await estraiPartecipazioniParty(eventId.value);
 
         partecipa.value = infoParty.partecipa;
         currentPartecipants.value = infoParty.numero_partecipazioni;
@@ -191,27 +191,27 @@ async function AnswerFaq() {
 // Funzione per iscriversi al party
 async function inscriviAEventoParty() {
     if (isParty.value) {
-        await partecipaParty(idep.value);
+        await partecipaParty(eventId.value);
     } else {
-        await partecipaEvento(idep.value);
+        await partecipaEvento(eventId.value);
     }
     await refresh()
 }
 
 async function disinscriviDaEventoParty() {
     if (isParty.value) {
-        await disinscriviParty(idep.value);
+        await disinscriviParty(eventId.value);
     } else {
-        await disinscriviEvento(idep.value);
+        await disinscriviEvento(eventId.value);
     }
     await refresh()
 }
 
 async function eliminaEventoParty() {
     if (isParty.value) {
-        await eliminaParty(idep.value);
+        await eliminaParty(eventId.value);
     } else {
-        await eliminaEvento(idep.value);
+        await eliminaEvento(eventId.value);
     }
     closePopup();
 }
