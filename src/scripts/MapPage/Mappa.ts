@@ -286,7 +286,7 @@ export function teletrasportati(lat: number, lng: number) {
     map.setCenter({ lat, lng });
     setTimeout(async () => {
         await aggiorna();
-    }, 800);
+    }, 200);
 }
 
 
