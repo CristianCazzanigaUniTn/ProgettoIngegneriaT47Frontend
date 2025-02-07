@@ -12,7 +12,7 @@
     left: 0;
     right: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: 998;
     border-radius: 10px;
   }
   
@@ -148,8 +148,6 @@
   .suggestions {
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
     background: #fff;
     color: black;
     border-radius: 2%;
@@ -303,8 +301,32 @@
 
  
   .search-bar {
-      display: none;
+      display:flex;
+      height: 48px;
+      width: 60%;
+      position: fixed;
+      top: 126px;
+      right: 20px;
+      z-index: 998;
+      border-radius: 25px;
+      background-color: #00000098;
+      box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
   }
+
+
+  .suggestions {
+    position: fixed;
+    top: 180px;
+    right: 50px;
+    width: 50%;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 998;
+}
+
 
   #chiSiamo {
     display: none;
