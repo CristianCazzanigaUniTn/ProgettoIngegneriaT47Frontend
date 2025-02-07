@@ -457,7 +457,7 @@ h1 {
 
 @media (max-width: 994px) {
     #filtroVisualizza {
-        z-index: 998;
+        z-index: 996;
         height: 60px;
         width: 60px;
         position: fixed;
