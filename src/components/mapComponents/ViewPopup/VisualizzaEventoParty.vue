@@ -9,7 +9,6 @@
                     <img :src="eventProfilePicture" alt="Profile Picture" class="instagram-card-user-image" />
                     <div>
                         <a :href="`/profilo/${eventUserId}`" class="instagram-card-user-name">{{ eventUsername }}</a>
-                        <div class="instagram-card-time">{{ eventTime }}</div>
                     </div>
                 </div>
                 <div class="instagram-card-image">
@@ -20,9 +19,11 @@
                     <div class="categorie">
                         <span class="categorie-item">{{ eventCategory }}</span>
                     </div>
+                    <div class="instagram-card-time">{{ eventTime }}</div>
                     <p class="partecipanti">
                         <span>{{ currentPartecipants }}</span> / <span>{{ eventMaxPartecipants }}</span> partecipanti
                     </p>
+                    
                     <button id="azionePartyButton" class="button-iscrizione" @click="inscriviAEventoParty"
                         v-if="!partecipa && !organizzaEP && loggedUser.token !== undefined && loggedUser.ruolo === 'utente_base'">
                         Iscriviti

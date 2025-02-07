@@ -19,7 +19,6 @@
     width: 90%;
     max-width: 600px;
     background: #ffffff;
-    border: 1px solid #f2f2f2;
     border-radius: 10px;
     padding: 0;
     max-height: 800px;
@@ -70,6 +69,7 @@
 
 .instagram-card-time {
     margin-left: auto;
+    margin-left: 20px;
     color: #999;
     font-size: 14px;
     padding-top: 5px;

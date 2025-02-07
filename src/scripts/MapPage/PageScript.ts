@@ -150,7 +150,7 @@ async function setPostData(dati: any) {
   postUserName.value = dati.profileName;
   postUserId.value = dati.id;
   postProfilePicture.value = dati.profileImage;
-  postTime.value = '12 dicembre';
+  postTime.value = dati.dataCreazione;
   postImage.value = dati.postImage;
   postDescription.value = dati.description;
 }

@@ -73,6 +73,10 @@ async function estraiPostDaFile(lat: number, lng: number, rad: number, posts: Po
         for (const post of data) {
             const utente = await estraiUtente(post.utente_id);
             if (utente) {
+                var data_creazione = new Date(post.data_creazione);
+                const data_creazione_data = data_creazione.toLocaleDateString(); 
+                const data_creazione_ora = data_creazione.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}); 
+                const data_creazioneF =(`Data creazione: ${data_creazione_data}, ${data_creazione_ora}`);   
                 const postData = {
                     id: utente.user.id,
                     profileName: utente.user.username,
@@ -82,6 +86,7 @@ async function estraiPostDaFile(lat: number, lng: number, rad: number, posts: Po
                     dataIndex: post._id,
                     latitudine: post.posizione.latitudine,
                     longitudine: post.posizione.longitudine,
+                    dataCreazione: data_creazioneF
                 };
                 if (post.contenuto !== 'null') {
                     posts.push({ ...postData, dataType: 'post' });
