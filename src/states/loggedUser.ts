@@ -56,7 +56,6 @@ export const isAuthenticated = computed( () => {
     const token = localStorage.getItem('authToken');
     if (token) {
         setLoggedUserFromToken();
-        console.log(loggedUser.foto_profilo);
     }
     return loggedUser.username !== undefined;
 });

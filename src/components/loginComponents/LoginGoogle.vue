@@ -28,8 +28,6 @@ import router from '../../router';
     google_gsi_client.setAttribute('src', 'https://accounts.google.com/gsi/client');
     google_gsi_client.onload = function () {
         if (google && google.accounts && google.accounts.id) {
-            console.log("ciao eccomi");
-            console.log("Client ID usato:", VITE_GOOGLE_CLIENT_ID);
 
             google.accounts.id.initialize({
                 client_id: VITE_GOOGLE_CLIENT_ID,
@@ -53,8 +51,6 @@ import router from '../../router';
 });
 
     function handleCredentialResponse(response) {
-        console.log("cc");
-        console.log(response);
         if (response.credential) {
             myLogin(response.credential);
         }

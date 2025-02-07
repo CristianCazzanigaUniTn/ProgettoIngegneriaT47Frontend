@@ -36,7 +36,6 @@ async function estraiPartyDaFile(lat: number, lng: number, rad: number, parties:
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ lat, lng, rad }),
         });
-
         if (!response.ok) return;
         const data = await response.json();
         for (const party of data) {
@@ -67,7 +66,6 @@ async function estraiPostDaFile(lat: number, lng: number, rad: number, posts: Po
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ lat, lng, rad }),
         });
-
         if (!response.ok) return;
         const data = await response.json();
         for (const post of data) {
@@ -164,7 +162,7 @@ async function estraiCategoria(id: any) {
     try {
         const c = await fetch(`${API_BASE_URL}/api/categoria/${id}`);
         if (c.status === 404) {
-            return 0;
+            return;
         }
         if (!c.ok) {
             throw new Error(`Errore nella richiesta: ${c.status} ${c.statusText}`);
@@ -178,7 +176,6 @@ async function estraiCategoria(id: any) {
 export async function estraipartyid(id: any) {
     try {
         const p = await fetch(`${API_BASE_URL}/api/party/${id}`);
-
         if (p.status === 404) {
             return;
         }

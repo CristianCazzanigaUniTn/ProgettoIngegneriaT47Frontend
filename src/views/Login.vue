@@ -119,7 +119,6 @@ function handleProfilePictureChange(event) {
   const file = event.target.files[0]; 
   if (file) {
     profilePictureFile = file;
-    console.log(profilePictureFile);
     const reader = new FileReader();
 
     reader.onload = function (e) {

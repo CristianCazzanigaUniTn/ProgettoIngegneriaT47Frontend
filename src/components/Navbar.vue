@@ -115,7 +115,6 @@ function handleSuggestionClick(city) {
     .then(coordinates => {
       // andare a queste coordinate
       teletrasportati(coordinates.lat, coordinates.lng);
-      console.log(`Coordinate di ${city.name}: Lat ${coordinates.lat}, Lon ${coordinates.lng}`);
     })
     .catch(error => {
       console.error(error);

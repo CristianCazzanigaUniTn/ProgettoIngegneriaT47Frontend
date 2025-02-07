@@ -40,7 +40,7 @@
 
             </div>
 
-            <div class="faq-input-container" v-if="!isParty && loggedUser.token !== undefined">
+            <div class="faq-input-container" v-if="!isParty && loggedUser.token !== undefined && (loggedUser.ruolo === 'utente_base' || organizzaEP === true)">
 
                 <textarea id="faqInput" class="faq-input"
                     :placeholder="organizzaEP ? 'Rispondi ad una domanda...' : 'Scrivi una domanda...'"
@@ -149,17 +149,14 @@ async function addFaq() {
 }
 
 async function refresh() {
-
     if (!isParty.value) {
         const infoEvento = await estraiInformazioniEventi(eventId.value);
-
         partecipa.value = infoEvento.partecipa;
         currentPartecipants.value = infoEvento.numero_partecipazioni;
         faq.value = infoEvento.faq;
 
     } else {
         const infoParty = await estraiPartecipazioniParty(eventId.value);
-
         partecipa.value = infoParty.partecipa;
         currentPartecipants.value = infoParty.numero_partecipazioni;
     }

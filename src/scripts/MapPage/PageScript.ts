@@ -81,7 +81,6 @@ export async function openPopup(type:any, posizione:any) {
     posizione = { lat: posizione2.latitudine, lng: posizione2.longitudine };
     teletrasportati(posizione.lat, posizione.lng);
 }
-  console.log(posizione);
   apriPopUpAnim(posizione);
   if (type == "CreaPost") showPopupCreaPost.value = true;
   if (type == "CreaParty") showPopupCreaParty.value = true;
@@ -169,7 +168,6 @@ async function setPartyData(dati: any) {
     eventMaxPartecipants.value = party.maxpartecipanti;
     eventCategory.value = party.Categoria;
     eventTime.value = party.time;
-    console.log(party.time);
     openPopup('VisualizzaPartyEvento', { lat: dati.latitudine, lng: dati.longitudine });
   }
 }

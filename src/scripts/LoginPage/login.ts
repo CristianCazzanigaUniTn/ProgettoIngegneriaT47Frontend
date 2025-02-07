@@ -73,7 +73,7 @@ export function login(user: UserLogin) {
 export async function registerUser(user: UserRegister) {
     const dataRegistrazione = new Date().toISOString();
     const file = user.fileFoto;
-    console.log(file);
+
     try {
         if (!file) {
             alert('metti la foto profilo');

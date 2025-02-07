@@ -40,7 +40,6 @@ export async function sendEmail(username: string, email: string, verificationTok
         }
 
         const data = await response.json();
-        console.log(data.message);
 
     } catch (error: any) {
         console.error(error.message)
