@@ -65,36 +65,18 @@ import { useRoute } from 'vue-router'; // Importa useRoute
 import {clearLoggedUser, isAuthenticated, logUserId, logUserName, logProfilePicture } from '@/states/loggedUser.ts';
 import router from '../router';
 import { teletrasportati } from '@/scripts/MapPage/Mappa';
+import { fetchSuggestions, fetchCoordinates } from '@/scripts/MapPage/ComponentScripts/BarraDiRicerca';
 
 
-const API_KEY = import.meta.env.VITE_HERE_API_KEY2;
 const searchQuery = ref('');
 const suggestions = ref([]);
 const result = ref('');
-const route = useRoute(); // Usa la route per verificare la rotta corrente
+const route = useRoute(); 
 const isMobile = ref(false);
 
 onMounted(() => {
   isMobile.value = window.innerWidth <= 768; 
 });
-
-async function fetchSuggestions(query) {
-  const url = `https://autocomplete.search.hereapi.com/v1/autocomplete?q=${encodeURIComponent(query)}&apiKey=${API_KEY}&limit=4&types=city`;
-  const response = await fetch(url);
-  const data = await response.json();
-  return data.items.map(item => ({ name: item.title }));
-}
-
-async function fetchCoordinates(cityName) {
-  const url = `https://geocode.search.hereapi.com/v1/geocode?q=${encodeURIComponent(cityName)}&apiKey=${API_KEY}`;
-  const response = await fetch(url);
-  const data = await response.json();
-  if (data.items && data.items.length > 0) {
-    return data.items[0].position;
-  } else {
-    throw new Error('Coordinate non trovate.');
-  }
-}
 
 function handleSearchInput() {
   if (searchQuery.value.trim().length > 2) {
@@ -113,7 +95,6 @@ function handleSuggestionClick(city) {
   suggestions.value = [];
   fetchCoordinates(city.name)
     .then(coordinates => {
-      // andare a queste coordinate
       teletrasportati(coordinates.lat, coordinates.lng);
     })
     .catch(error => {
@@ -128,7 +109,6 @@ function handleLogout() {
 }
 
 const showSearchBar = computed(() => route.path === '/');
-
 
 const isSettingsMenuVisible = ref(false);
 
