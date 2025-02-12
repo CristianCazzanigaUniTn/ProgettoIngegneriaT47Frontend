@@ -139,6 +139,7 @@ async function eventFormHandler() {
         const eventData = {
             nome: nomeEvento.value,
             data_inizio: eventDate.value,
+            data_creazione: new Date(),
             luogo: eventLocation.value,
             posizione: eventPosition.value,
             id_categoria: eventType.value,

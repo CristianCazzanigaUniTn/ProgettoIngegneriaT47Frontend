@@ -143,6 +143,7 @@ async function partyFormHandler() {
         const partyData = {
             nome: partyName.value,
             data_inizio: partyDate.value,
+            data_creazione: new Date(),
             luogo: partyLocation.value,
             posizione: partyPosition.value,
             id_categoria: partyType.value, 
