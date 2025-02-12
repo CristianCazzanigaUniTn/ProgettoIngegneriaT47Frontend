@@ -151,7 +151,10 @@ async function partyFormHandler() {
             descrizione: partyDescription.value,
             foto: imageUrl,
         };
-        await createParty(partyData, tokenFromStorage.value);
+        const response = await createParty(partyData, tokenFromStorage.value);
+        if (response.error) {
+            throw new Error('Errore nei dati, controlla le date e riprova.');
+        }
         alert('Party creato con successo');
         aggiorna();
     } catch (error) {

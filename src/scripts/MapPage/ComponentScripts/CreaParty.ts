@@ -37,7 +37,6 @@ export async function createParty(partyData: any, token: any) {
     });
 
     const data = await response.json();
-
-    console.log(data);
+    
     return data;
 }

@@ -148,6 +148,9 @@ async function eventFormHandler() {
             foto: imageUrl,
         };
         const eventResponseData = await createEvent(eventData, tokenFromStorage.value);
+        if (eventResponseData.error) {
+            throw new Error('Errore nei dati, controlla le date e riprova.');
+        }
         alert('Evento creato con successo');
         aggiorna();
     } catch (error) {
