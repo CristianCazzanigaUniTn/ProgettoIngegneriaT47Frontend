@@ -130,6 +130,8 @@ export async function eliminaPost(id_post: any) {
         if (!response.ok) {
             throw new Error(`Errore nella richiesta: ${response.status} ${response.statusText}`);
         }
+
+        aggiorna();
     } catch (error) {
         alert("Errore durante l'eliminazione: " + error);
     }

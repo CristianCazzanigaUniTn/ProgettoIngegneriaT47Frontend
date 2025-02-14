@@ -170,6 +170,7 @@ export async function eliminaParty(id_party: any) {
             throw new Error(`Errore nella richiesta: ${response.status} ${response.statusText}`);
         }
 
+        aggiorna();
     } catch (error) {
         alert("Errore durante l'eliminazione: " + error);
     }
