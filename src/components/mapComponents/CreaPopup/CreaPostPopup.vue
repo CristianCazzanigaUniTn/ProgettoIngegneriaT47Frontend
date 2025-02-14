@@ -109,7 +109,9 @@ async function postFormHandler() {
       posizione: posizionePost.value,
       data_creazione: dateTime.value,
     };
+    console.log(postData);
     const postDataResponse = await createPost(postData, tokenFromStorage); 
+    console.log(postDataResponse);
     alert('Post creato con successo');
     aggiorna(); 
   } catch (error) {
